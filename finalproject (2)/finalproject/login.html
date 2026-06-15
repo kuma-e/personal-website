@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HUSNBSS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS-only Login System */
+        
+         :root {
+            --student-color: #1E6B52;
+            --teacher-color: #E67E22;
+            --admin-color: #C0392B;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #212529;
+            background: linear-gradient(135deg, #002147, #1E6B52);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .login-system {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            min-height: 700px;
+        }
+        /* Header */
+        
+        .login-header {
+            background: #002147;
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        
+        .login-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .login-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        /* User Type Selection */
+        
+        .user-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .user-option {
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .user-radio {
+            display: none;
+        }
+        
+        .user-label {
+            display: block;
+            padding: 2rem 1rem;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .user-label:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        /* CSS-only form switching */
+        /* Hide all forms by default */
+        
+        .user-form {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        /* Show form when corresponding radio is checked */
+        
+        #student-radio:checked~.forms-container #student-form,
+        #teacher-radio:checked~.forms-container #teacher-form,
+        #admin-radio:checked~.forms-container #admin-form {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Style active label */
+        
+        #student-radio:checked~.user-type-selector .student-label,
+        #teacher-radio:checked~.user-type-selector .teacher-label,
+        #admin-radio:checked~.user-type-selector .admin-label {
+            background: linear-gradient(135deg, #002147, #1E6B52);
+            color: white;
+            border-color: #E6AF2E;
+        }
+        /* Label colors */
+        
+        .student-label {
+            border-left: 4px solid var(--student-color);
+        }
+        
+        .teacher-label {
+            border-left: 4px solid var(--teacher-color);
+        }
+        
+        .admin-label {
+            border-left: 4px solid var(--admin-color);
+        }
+        /* Forms Container */
+        
+        .forms-container {
+            padding: 2rem;
+            min-height: 400px;
+            position: relative;
+        }
+        /* Form Styling */
+        
+        .login-form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #212529;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #002147;
+            box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.1);
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input {
+            width: 18px;
+            height: 18px;
+        }
+        /* Submit Buttons */
+        
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: #002147;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-submit:hover {
+            background: #E6AF2E;
+            color: #002147;
+        }
+        /* Register Button - Only for Student */
+        
+        .student-actions {
+            margin-top: 1rem;
+        }
+        
+        .btn-register {
+            width: 100%;
+            padding: 1rem;
+            background: #1E6B52;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn-register:hover {
+            background: #144d39;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 107, 82, 0.3);
+        }
+        
+        .btn-register:active {
+            transform: translateY(0);
+        }
+        /* Only show register button in student form */
+        
+        #student-form .btn-register {
+            display: flex;
+        }
+        /* Hide register button in other forms */
+        
+        #teacher-form .btn-register,
+        #admin-form .btn-register {
+            display: none;
+        }
+        /* Credentials Display */
+        
+        .credentials-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            border-left: 4px solid #E6AF2E;
+        }
+        
+        .credentials-info h4 {
+            margin-bottom: 1rem;
+            color: #002147;
+        }
+        
+        .credential-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .credential-item:last-child {
+            border-bottom: none;
+        }
+        
+        .credential-item i {
+            color: #1E6B52;
+            width: 20px;
+        }
+        /* Footer */
+        
+        .login-footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #002147;
+            color: white;
+            font-size: 0.9rem;
+            border-top: 2px solid #E6AF2E;
+        }
+        
+        .login-footer a {
+            color: #E6AF2E;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        /* Dashboard Preview (for demo) */
+        
+        .dashboard-preview {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .dashboard-preview h4 {
+            margin-bottom: 1rem;
+            color: #002147;
+        }
+        
+        .preview-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .preview-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .preview-item i {
+            color: #1E6B52;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 768px) {
+            .user-type-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            .user-option {
+                max-width: 100%;
+                width: 100%;
+            }
+            .preview-features {
+                grid-template-columns: 1fr;
+            }
+            .login-header {
+                padding: 1.5rem;
+            }
+            .login-header h2 {
+                font-size: 1.8rem;
+            }
+            .login-form {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .forms-container {
+                padding: 1rem;
+            }
+            .login-form {
+                padding: 1rem;
+            }
+            .btn-submit,
+            .btn-register {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .login-header h2 {
+                font-size: 1.5rem;
+            }
+            .user-label {
+                padding: 1.5rem 1rem;
+            }
+            .user-label h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main Login System -->
+    <div class="login-system">
+        <!-- Radio buttons for user type selection (hidden) -->
+        <input type="radio" id="student-radio" name="user-type" class="user-radio" checked>
+        <input type="radio" id="teacher-radio" name="user-type" class="user-radio">
+        <input type="radio" id="admin-radio" name="user-type" class="user-radio">
+
+        <!-- Header -->
+        <div class="login-header">
+            <h2>Welcome to HUSNBSS</h2>
+            <p>Select your role and use demo credentials to login</p>
+        </div>
+
+        <!-- User Type Selection -->
+        <div class="user-type-selector">
+            <div class="user-option">
+                <label for="student-radio" class="user-label student-label">
+                    <i class="fas fa-user-graduate"></i><br>
+                    <h3>Student</h3>
+                    <p>Access assignments and grades</p>
+                </label>
+            </div>
+
+            <div class="user-option">
+                <label for="teacher-radio" class="user-label teacher-label">
+                    <i class="fas fa-chalkboard-teacher"></i><br>
+                    <h3>Teacher</h3>
+                    <p>Manage classes and students</p>
+                </label>
+            </div>
+
+            <div class="user-option">
+                <label for="admin-radio" class="user-label admin-label">
+                    <i class="fas fa-user-shield"></i><br>
+                    <h3>Admin</h3>
+                    <p>System administration</p>
+                </label>
+            </div>
+        </div>
+
+        <!-- Forms Container -->
+        <div class="forms-container">
+            <!-- Student Login Form -->
+            <form id="student-form" class="user-form login-form" method="get" action="dashboard-student.html">
+                <h3><i class="fas fa-user-graduate"></i> Student Login</h3>
+
+                <div class="form-group">
+                    <label for="student-username">Username</label>
+                    <input type="text" id="student-username" class="form-control" placeholder="Enter username" value="student" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="student-password">Password</label>
+                    <input type="password" id="student-password" class="form-control" placeholder="Enter password" value="student123" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox"> Remember me
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-sign-in-alt"></i> Login as Student
+                </button>
+
+                <div class="student-actions">
+                    <a href="registration.html" class="btn-register">
+                        <i class="fas fa-user-plus"></i> Register as New Student
+                    </a>
+                </div>
+
+                <div class="dashboard-preview">
+                    <h4>Student Dashboard Features:</h4>
+                    <div class="preview-features">
+                        <div class="preview-item">
+                            <i class="fas fa-tasks"></i>
+                            <p>View assignments</p>
+                        </div>
+                        <div class="preview-item">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Check grades</p>
+                        </div>
+                        <div class="preview-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>View schedule</p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Teacher Login Form -->
+            <form id="teacher-form" class="user-form login-form" method="get" action="dashboard-teacher.html">
+                <h3><i class="fas fa-chalkboard-teacher"></i> Teacher Login</h3>
+
+                <div class="form-group">
+                    <label for="teacher-username">Username</label>
+                    <input type="text" id="teacher-username" class="form-control" placeholder="Enter username" value="teacher" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="teacher-password">Password</label>
+                    <input type="password" id="teacher-password" class="form-control" placeholder="Enter password" value="teacher123" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox"> Remember me
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-sign-in-alt"></i> Login as Teacher
+                </button>
+
+                <div class="dashboard-preview">
+                    <h4>Teacher Dashboard Features:</h4>
+                    <div class="preview-features">
+                        <div class="preview-item">
+                            <i class="fas fa-book-open"></i>
+                            <p>Manage classes</p>
+                        </div>
+                        <div class="preview-item">
+                            <i class="fas fa-tasks"></i>
+                            <p>Grade assignments</p>
+                        </div>
+                        <div class="preview-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <p>Track student progress</p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Admin Login Form -->
+            <form id="admin-form" class="user-form login-form" method="get" action="dashboard-admin.html">
+                <h3><i class="fas fa-user-shield"></i> Admin Login</h3>
+
+                <div class="form-group">
+                    <label for="admin-username">Username</label>
+                    <input type="text" id="admin-username" class="form-control" placeholder="Enter username" value="admin" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" class="form-control" placeholder="Enter password" value="admin123" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox"> Remember me
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-sign-in-alt"></i> Login as Admin
+                </button>
+
+                <div class="dashboard-preview">
+                    <h4>Admin Dashboard Features:</h4>
+                    <div class="preview-features">
+                        <div class="preview-item">
+                            <i class="fas fa-users"></i>
+                            <p>Manage users</p>
+                        </div>
+                        <div class="preview-item">
+                            <i class="fas fa-chart-pie"></i>
+                            <p>System analytics</p>
+                        </div>
+                        <div class="preview-item">
+                            <i class="fas fa-cog"></i>
+                            <p>System settings</p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Demo Credentials Info -->
+            <div class="credentials-info">
+                <h4><i class="fas fa-info-circle"></i> Demo Credentials</h4>
+                <div class="credential-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <strong>Student:</strong> student / student123
+                </div>
+                <div class="credential-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <strong>Teacher:</strong> teacher / teacher123
+                </div>
+                <div class="credential-item">
+                    <i class="fas fa-user-shield"></i>
+                    <strong>Admin:</strong> admin / admin123
+                </div>
+                <div class="credential-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <em>Click on any role card above to switch login form</em>
+                </div>
+                <div class="credential-item">
+                    <i class="fas fa-external-link-alt"></i>
+                    <strong>Student Registration:</strong> Use the "Register as New Student" button in the Student login form
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <p>Haramaya University Special Non-Boarding Secondary School</p>
+            <p>For admissions, visit <a href="admissions.html">Admissions page</a> | Need help? <a href="contact.html">Contact support</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - HUSNBSS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Professional Student Dashboard Overrides ── */
+        :root {
+            --primary-color: #002147;
+            --secondary-color: #E6AF2E;
+            --accent-color: #1E6B52;
+            --danger-color: #DC3545;
+            --success-color: #28A745;
+            --info-color: #17a2b8;
+            --gray-color: #6C757D;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 20px rgba(0,0,0,.08);
+            --transition: all .3s ease;
+        }
+
+        body.dashboard {
+            background: #f0f2f5;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* ── Header ── */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #003a7a 100%);
+            padding: 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,.2);
+        }
+        .dashboard-header .container { padding: 0 24px; }
+        .dashboard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .logo-icon {
+            width: 44px; height: 44px;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .logo-main { font-size: 1.1rem; font-weight: 700; color: #fff; display: block; }
+        .logo-sub  { font-size: .75rem; color: rgba(255,255,255,.7); display: block; }
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .user-avatar {
+            width: 40px; height: 40px;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: .9rem;
+            flex-shrink: 0;
+        }
+        .user-name  { font-weight: 600; color: #fff; font-size: .9rem; }
+        .user-role  { font-size: .75rem; color: rgba(255,255,255,.7); }
+        .btn-login {
+            background: rgba(255,255,255,.15);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600; font-size: .85rem;
+            text-decoration: none;
+            display: flex; align-items: center; gap: 7px;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,.25);
+        }
+        .btn-login:hover { background: rgba(255,255,255,.25); }
+
+        /* ── Layout ── */
+        .dashboard-main { padding: 28px 0; }
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* ── Sidebar ── */
+        .dashboard-sidebar {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            position: sticky;
+            top: 90px;
+        }
+        .sidebar-header {
+            background: linear-gradient(135deg, var(--primary-color), #003a7a);
+            padding: 20px 20px 16px;
+            color: #fff;
+        }
+        .sidebar-header .avatar-lg {
+            width: 54px; height: 54px;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.2rem;
+            margin: 0 auto 10px;
+        }
+        .sidebar-header h4 { text-align: center; font-size: .95rem; margin: 0; }
+        .sidebar-header p  { text-align: center; font-size: .75rem; opacity: .75; margin: 2px 0 0; }
+
+        .sidebar-menu { list-style: none; padding: 10px 0; margin: 0; }
+        .sidebar-menu li { margin: 0; }
+        .sidebar-menu a {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 20px;
+            color: #444;
+            text-decoration: none;
+            font-size: .88rem; font-weight: 500;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+        .sidebar-menu a i { width: 18px; text-align: center; font-size: .9rem; color: var(--gray-color); transition: var(--transition); }
+        .sidebar-menu a:hover { background: #f4f6fa; color: var(--primary-color); border-left-color: var(--secondary-color); }
+        .sidebar-menu a:hover i { color: var(--primary-color); }
+        .sidebar-menu a.active { background: #eef2ff; color: var(--primary-color); border-left-color: var(--primary-color); font-weight: 600; }
+        .sidebar-menu a.active i { color: var(--primary-color); }
+        .sidebar-menu li + li { border-top: 1px solid #f5f5f5; }
+
+        /* ── Content ── */
+        .dashboard-content {
+            background: transparent;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        /* Page title bar */
+        .page-title-bar {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px 26px;
+            margin-bottom: 22px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-left: 5px solid var(--secondary-color);
+        }
+        .page-title-bar h1 { font-size: 1.4rem; color: var(--primary-color); margin: 0; }
+        .page-title-bar .subtitle { font-size: .875rem; color: var(--gray-color); margin: 4px 0 0; }
+        .page-title-bar .title-icon {
+            width: 46px; height: 46px;
+            background: linear-gradient(135deg, var(--primary-color), #003a7a);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* ── Stat Cards ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 22px 20px;
+            display: flex; align-items: center; gap: 16px;
+            transition: var(--transition);
+            border-top: none;
+            overflow: hidden;
+            position: relative;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: var(--secondary-color);
+        }
+        .stat-card:nth-child(2)::before { background: var(--success-color); }
+        .stat-card:nth-child(3)::before { background: var(--danger-color); }
+        .stat-card:nth-child(4)::before { background: var(--info-color); }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+        .stat-icon {
+            width: 50px; height: 50px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+            background: #fff8e1; color: var(--secondary-color);
+        }
+        .stat-card:nth-child(2) .stat-icon { background: #e8f5e9; color: var(--success-color); }
+        .stat-card:nth-child(3) .stat-icon { background: #fde8ea; color: var(--danger-color); }
+        .stat-card:nth-child(4) .stat-icon { background: #e1f5fe; color: var(--info-color); }
+        .stat-info { flex: 1; min-width: 0; }
+        .stat-card h3 { font-size: .78rem; color: var(--gray-color); text-transform: uppercase; letter-spacing: .5px; margin: 0 0 5px; }
+        .stat-card .number { font-size: 1.7rem; font-weight: 700; color: var(--primary-color); line-height: 1; margin-bottom: 5px; }
+        .stat-card .trend { font-size: .78rem; color: var(--gray-color); }
+
+        /* ── Section Panels ── */
+        .section {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+        .section h2 {
+            font-size: 1.05rem;
+            color: var(--primary-color);
+            margin: 0 0 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section h2 i { color: var(--secondary-color); font-size: 1rem; }
+
+        /* ── Today's Classes ── */
+        .schedule-today { display: flex; flex-direction: column; gap: 12px; }
+        .class-card {
+            display: flex;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: var(--transition);
+        }
+        .class-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,.1); transform: translateY(-2px); }
+        .class-card.upcoming { border-color: var(--secondary-color); }
+        .class-time {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 16px 14px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-width: 110px;
+            text-align: center;
+            font-size: .82rem; font-weight: 600; line-height: 1.5;
+        }
+        .class-card.upcoming .class-time { background: var(--secondary-color); color: var(--primary-color); }
+        .class-details { padding: 14px 18px; flex: 1; }
+        .class-details h3 { font-size: .95rem; margin: 0 0 4px; color: var(--primary-color); }
+        .class-details p { font-size: .82rem; color: var(--gray-color); margin: 0 0 8px; }
+
+        /* ── Assignments ── */
+        .assignments-list { display: flex; flex-direction: column; gap: 12px; }
+        .assignment-card {
+            display: flex; align-items: center; gap: 16px;
+            background: #fafbfd;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 16px 18px;
+            transition: var(--transition);
+        }
+        .assignment-card.urgent { border-left: 4px solid var(--danger-color); }
+        .assignment-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+        .assignment-subject {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600; font-size: .8rem;
+            min-width: 90px; text-align: center;
+            flex-shrink: 0;
+        }
+        .assignment-details { flex: 1; min-width: 0; }
+        .assignment-details h3 { font-size: .92rem; margin: 0 0 3px; color: var(--primary-color); }
+        .assignment-details p { font-size: .8rem; color: var(--gray-color); margin: 0 0 8px; }
+        .assignment-meta { display: flex; flex-wrap: wrap; gap: 12px; color: var(--gray-color); font-size: .78rem; }
+        .assignment-meta span { display: flex; align-items: center; gap: 5px; }
+        .assignment-status { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 110px; flex-shrink: 0; }
+
+        /* ── Badges ── */
+        .badge {
+            display: inline-block; padding: 4px 10px;
+            border-radius: 20px; font-size: .75rem; font-weight: 600;
+        }
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-danger  { background: #f8d7da; color: #721c24; }
+
+        /* ── Buttons ── */
+        .btn-primary, .btn-secondary {
+            padding: 7px 16px; border-radius: 6px; font-size: .82rem;
+            font-weight: 600; cursor: pointer; border: none;
+            transition: var(--transition); text-decoration: none;
+            display: inline-block; text-align: center;
+        }
+        .btn-primary { background: var(--primary-color); color: #fff; }
+        .btn-primary:hover { background: #003a7a; }
+        .btn-secondary { background: #f0f2f5; color: var(--primary-color); border: 1px solid #ddd; }
+        .btn-secondary:hover { background: #e2e6ea; }
+
+        /* ── Table ── */
+        .table { width: 100%; border-collapse: collapse; }
+        .table th { background: var(--primary-color); color: #fff; padding: 12px 14px; font-size: .82rem; text-align: left; }
+        .table th:first-child { border-radius: 6px 0 0 0; }
+        .table th:last-child  { border-radius: 0 6px 0 0; }
+        .table td { padding: 12px 14px; border-bottom: 1px solid #f0f0f0; font-size: .85rem; }
+        .table tr:last-child td { border-bottom: none; }
+        .table tr:hover td { background: #f8f9ff; }
+        .text-success { color: var(--success-color); }
+        .text-warning { color: #ffc107; }
+        .table-responsive { overflow-x: auto; border-radius: 8px; }
+
+        /* ── Responsive ── */
+        @media (max-width: 992px) {
+            .dashboard-layout { grid-template-columns: 1fr; }
+            .dashboard-sidebar { position: static; }
+        }
+        @media (max-width: 640px) {
+            .class-card, .assignment-card { flex-direction: column; text-align: center; }
+            .class-time { min-width: 100%; }
+            .assignment-subject { min-width: auto; }
+            .assignment-meta { justify-content: center; }
+            .assignment-status { min-width: auto; width: 100%; }
+            .page-title-bar { flex-direction: column; gap: 12px; align-items: flex-start; }
+        }
+    </style>
+</head>
+
+<body class="dashboard">
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="dashboard-nav">
+                <div class="logo">
+                    <div class="logo-icon">HUS</div>
+                    <div class="logo-text">
+                        <span class="logo-main">HUSNBSS</span>
+                        <span class="logo-sub">Student Portal</span>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar">SM</div>
+                    <div>
+                        <div class="user-name">Selamawit Mekonnen</div>
+                        <div class="user-role">Grade 11 Natural Science</div>
+                    </div>
+                    <a href="index.html" class="btn-login"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="dashboard-main">
+        <div class="container">
+            <div class="dashboard-layout">
+
+                <!-- Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <div class="sidebar-header">
+                        <div class="avatar-lg">SM</div>
+                        <h4>Selamawit Mekonnen</h4>
+                        <p>Grade 11 Natural Science</p>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a href="dashboard-student.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Courses</a></li>
+                        <li><a href="#"><i class="fas fa-tasks"></i> Assignments</a></li>
+                        <li><a href="#"><i class="fas fa-chart-line"></i> Grades</a></li>
+                        <li><a href="#"><i class="fas fa-file-download"></i> Resources</a></li>
+                        <li><a href="#"><i class="fas fa-laptop"></i> ICT Lab</a></li>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Back to Home</a></li>
+                    </ul>
+                </aside>
+
+                <!-- Content -->
+                <section class="dashboard-content">
+
+                    <!-- Page title -->
+                    <div class="page-title-bar">
+                        <div>
+                            <h1>Student Dashboard</h1>
+                            <p class="subtitle">Welcome back, Selamawit! You have 3 upcoming assignments.</p>
+                        </div>
+                        <div class="title-icon"><i class="fas fa-graduation-cap"></i></div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-star"></i></div>
+                            <div class="stat-info">
+                                <h3>Current GPA</h3>
+                                <div class="number">3.8</div>
+                                <div class="trend"><i class="fas fa-arrow-up text-success"></i> 0.2 from last term</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="stat-info">
+                                <h3>Attendance</h3>
+                                <div class="number">96%</div>
+                                <div class="trend"><span class="badge badge-success">Excellent</span></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
+                            <div class="stat-info">
+                                <h3>Pending Assignments</h3>
+                                <div class="number">3</div>
+                                <div class="trend"><span class="badge badge-warning">Due soon</span></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-chalkboard"></i></div>
+                            <div class="stat-info">
+                                <h3>Next Class</h3>
+                                <div class="number" style="font-size:1.2rem;">Physics</div>
+                                <div class="trend">10:30 AM, Room 205</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today's Classes -->
+                    <div class="section">
+                        <h2><i class="fas fa-calendar-day"></i> Today's Classes</h2>
+                        <div class="schedule-today">
+                            <div class="class-card">
+                                <div class="class-time">8:00<br>–<br>9:30</div>
+                                <div class="class-details">
+                                    <h3>Advanced Mathematics</h3>
+                                    <p><i class="fas fa-user-tie"></i> Teacher: Sophia Mohammed &nbsp;|&nbsp; <i class="fas fa-door-open"></i> Room: 302</p>
+                                    <span class="badge badge-success">Completed</span>
+                                </div>
+                            </div>
+                            <div class="class-card upcoming">
+                                <div class="class-time">10:30<br>–<br>12:00</div>
+                                <div class="class-details">
+                                    <h3>Physics</h3>
+                                    <p><i class="fas fa-user-tie"></i> Teacher: Alemayehu Kebede &nbsp;|&nbsp; <i class="fas fa-door-open"></i> Room: 205</p>
+                                    <span class="badge badge-warning">Starts in 45 min</span>
+                                </div>
+                            </div>
+                            <div class="class-card">
+                                <div class="class-time">1:30<br>–<br>3:00</div>
+                                <div class="class-details">
+                                    <h3>Chemistry Lab</h3>
+                                    <p><i class="fas fa-user-tie"></i> Teacher: Yohannes Getachew &nbsp;|&nbsp; <i class="fas fa-door-open"></i> Room: Lab 1</p>
+                                    <span class="badge">Later today</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Assignments -->
+                    <div class="section">
+                        <h2><i class="fas fa-tasks"></i> Upcoming Assignments</h2>
+                        <div class="assignments-list">
+
+                            <div class="assignment-card urgent">
+                                <div class="assignment-subject">Physics</div>
+                                <div class="assignment-details">
+                                    <h3>Wave Properties Project</h3>
+                                    <p>Research paper on wave properties with practical examples</p>
+                                    <div class="assignment-meta">
+                                        <span><i class="far fa-calendar"></i> Due: Mar 18, 2024</span>
+                                        <span><i class="far fa-file"></i> PDF, Max 10 pages</span>
+                                    </div>
+                                </div>
+                                <div class="assignment-status">
+                                    <span class="badge badge-danger">URGENT</span>
+                                    <button class="btn-primary">Submit</button>
+                                </div>
+                            </div>
+
+                            <div class="assignment-card">
+                                <div class="assignment-subject">Biology</div>
+                                <div class="assignment-details">
+                                    <h3>Cell Biology Lab Report</h3>
+                                    <p>Microscope observation and analysis of cell structures</p>
+                                    <div class="assignment-meta">
+                                        <span><i class="far fa-calendar"></i> Due: Mar 20, 2024</span>
+                                        <span><i class="far fa-clock"></i> Estimated: 4 hours</span>
+                                    </div>
+                                </div>
+                                <div class="assignment-status">
+                                    <span class="badge badge-warning">In Progress</span>
+                                    <button class="btn-secondary">Continue</button>
+                                </div>
+                            </div>
+
+                            <div class="assignment-card">
+                                <div class="assignment-subject">Mathematics</div>
+                                <div class="assignment-details">
+                                    <h3>Calculus Problem Set</h3>
+                                    <p>Chapter 6 exercises on derivatives and integrals</p>
+                                    <div class="assignment-meta">
+                                        <span><i class="far fa-calendar"></i> Due: Mar 22, 2024</span>
+                                        <span><i class="fas fa-tasks"></i> 15 problems</span>
+                                    </div>
+                                </div>
+                                <div class="assignment-status">
+                                    <span class="badge">Not Started</span>
+                                    <button class="btn-secondary">Start</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Current Grades -->
+                    <div class="section">
+                        <h2><i class="fas fa-chart-bar"></i> Current Grades</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Teacher</th>
+                                        <th>Term 1</th>
+                                        <th>Term 2</th>
+                                        <th>Current</th>
+                                        <th>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Advanced Mathematics</strong></td>
+                                        <td>Sophia Mohammed</td>
+                                        <td>92%</td><td>94%</td><td><strong>95%</strong></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Physics</strong></td>
+                                        <td>Alemayehu Kebede</td>
+                                        <td>88%</td><td>90%</td><td><strong>91%</strong></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Chemistry</strong></td>
+                                        <td>Yohannes Getachew</td>
+                                        <td>85%</td><td>87%</td><td><strong>86%</strong></td>
+                                        <td><i class="fas fa-minus text-warning"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Biology</strong></td>
+                                        <td>Marta Asfaw</td>
+                                        <td>90%</td><td>89%</td><td><strong>92%</strong></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>English</strong></td>
+                                        <td>Thomas Johnson</td>
+                                        <td>87%</td><td>89%</td><td><strong>90%</strong></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

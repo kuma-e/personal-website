@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions - HUSNBSS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        
+         :root {
+            --primary-color: #006747;
+            /* Green */
+            --secondary-color: #FDB913;
+            /* Gold */
+            --accent-color: #002147;
+            /* Dark Blue */
+            --light-color: #f8f9fa;
+            --dark-color: #333333;
+            --gray-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-color);
+            background-color: #fafafa;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 103, 71, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background-color: #005238;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 103, 71, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--accent-color);
+            position: relative;
+            font-size: 2.5rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        /* Header Styles */
+        
+        header {
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            line-height: 1.2;
+        }
+        
+        .logo-text span {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 25px;
+        }
+        
+        nav a {
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 5px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        nav a.active {
+            color: var(--primary-color);
+        }
+        
+        nav a.active:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        /* Hero Section */
+        
+        .admission-hero {
+            background: linear-gradient(rgba(0, 103, 71, 0.9), rgba(0, 33, 71, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+        
+        .admission-hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .admission-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0.95;
+        }
+        /* Eligibility Criteria Section */
+        
+        .eligibility-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .eligibility-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .eligibility-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 50px;
+            border-top: 5px solid var(--primary-color);
+        }
+        
+        .eligibility-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .eligibility-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #e9f5f1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+        
+        .eligibility-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .eligibility-list {
+            margin-top: 25px;
+        }
+        
+        .eligibility-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .eligibility-list i {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        .requirement-note {
+            background-color: #fff9e6;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--warning-color);
+            margin-top: 30px;
+        }
+        
+        .requirement-note h4 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        /* Application Steps Section */
+        
+        .steps-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .steps-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .steps-timeline:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary-color);
+            opacity: 0.2;
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .step-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        
+        .step-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0, 103, 71, 0.3);
+        }
+        
+        .step-content {
+            width: 45%;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 30px;
+            transition: var(--transition);
+        }
+        
+        .step-item:nth-child(odd) .step-content {
+            margin-right: auto;
+            margin-left: 15%;
+        }
+        
+        .step-item:nth-child(even) .step-content {
+            margin-left: auto;
+            margin-right: 15%;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #e9f5f1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .step-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        /* Documents Section */
+        
+        .documents-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 40px auto 0;
+        }
+        
+        .document-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            border-top: 4px solid transparent;
+        }
+        
+        .document-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-top-color: var(--primary-color);
+        }
+        
+        .document-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #e9f5f1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 0 auto 20px;
+        }
+        
+        .document-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+        
+        .document-card p {
+            color: var(--gray-color);
+            font-size: 0.95rem;
+        }
+        /* CTA Section */
+        
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        /* FAQ Section */
+        
+        .faq-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+        
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-item input[type="checkbox"] {
+            display: none;
+        }
+        
+        .faq-item input[type="checkbox"]:checked~.faq-answer {
+            max-height: 500px;
+            padding-bottom: 25px;
+        }
+        
+        .faq-item input[type="checkbox"]:checked~.faq-question i {
+            transform: rotate(45deg);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        /* Footer */
+        
+        footer {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo h2 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary-color);
+        }
+        
+        .footer-links h3,
+        .footer-contact h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h3:after,
+        .footer-contact h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-contact i {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 992px) {
+            .step-item {
+                flex-direction: column !important;
+                align-items: center;
+            }
+            .step-content {
+                width: 80%;
+                margin: 0 auto !important;
+            }
+            .step-number {
+                position: relative;
+                left: auto;
+                transform: none;
+                margin-bottom: 20px;
+            }
+            .steps-timeline:before {
+                left: 15%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            nav {
+                display: none;
+                width: 100%;
+                order: 3;
+                margin-top: 20px;
+            }
+            nav.active {
+                display: block;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+            nav li {
+                border-bottom: 1px solid #eee;
+            }
+            nav a {
+                display: flex;
+                padding: 15px 0;
+            }
+            .admission-hero h1 {
+                font-size: 2.5rem;
+            }
+            .admission-hero p {
+                font-size: 1.1rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .step-content {
+                width: 90%;
+            }
+            .steps-timeline:before {
+                left: 10%;
+            }
+            .eligibility-card,
+            .step-content {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .admission-hero {
+                padding: 80px 0;
+            }
+            .admission-hero h1 {
+                font-size: 2rem;
+            }
+            .cta-title {
+                font-size: 2rem;
+            }
+            .stat-number {
+                font-size: 2rem;
+            }
+            .btn {
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <div class="logo">HU</div>
+                <div class="logo-text">
+                    <h1>HUSNBSS <span>Secondary School</span></h1>
+                    <p>Haramaya University Special Non-Boarding Secondary School</p>
+                </div>
+            </div>
+
+            <div class="mobile-menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-school"></i> About</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+                    <li><a href="index.html#academic"><i class="fas fa-chart-line"></i> Academics</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-menu">
+                <div class="user-avatar">GU</div>
+                <div>
+                    <p style="font-weight: 600;">Guest User</p>
+                    <p style="font-size: 0.8rem; color: var(--gray-color);">Not logged in</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="admission-hero">
+        <div class="container">
+            <h1>Begin Your Journey to Excellence</h1>
+            <p>Join HUSNBSS, where talented students are nurtured to become future leaders. Our admission process is designed to identify and select the most promising young minds.</p>
+            <a href="registration.html" class="btn btn-secondary" style="margin-right: 15px;">Start Application</a>
+            <a href="#eligibility" class="btn btn-outline" style="background-color: rgba(255,255,255,0.1); color: white; border-color: white;">Check Eligibility</a>
+        </div>
+    </section>
+
+    <!-- Eligibility Criteria Section -->
+    <section class="eligibility-section" id="eligibility">
+        <div class="container eligibility-container">
+            <h2 class="section-title">Admission Eligibility</h2>
+
+            <div class="eligibility-card">
+                <div class="eligibility-header">
+                    <div class="eligibility-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="eligibility-content">
+                        <h3>Eligibility Criteria</h3>
+                        <p>To be eligible for admission to HUSNBSS, students must meet the following requirements:</p>
+                    </div>
+                </div>
+
+                <ul class="eligibility-list">
+                    <li>
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <strong>Academic Excellence:</strong> Scored 80% or above in the previous year's Grade 8 Ministry exam
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-brain"></i>
+                        <div>
+                            <strong>Exceptional Potential:</strong> Demonstrate exceptional academic potential and talent through previous academic records
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <strong>Complete Documentation:</strong> Submit all required documents including birth certificate, previous school records, and recommendation letters
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-user-check"></i>
+                        <div>
+                            <strong>Age Requirement:</strong> Must be age-appropriate for Grade 9 (typically 14-15 years old)
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-heart"></i>
+                        <div>
+                            <strong>Good Conduct:</strong> Demonstrate good behavior and conduct with recommendation from previous school
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="requirement-note">
+                    <h4><i class="fas fa-info-circle"></i> Important Note</h4>
+                    <p>Meeting the minimum eligibility criteria does not guarantee admission. Due to limited seats, selection will be based on merit and additional assessment where necessary.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Steps Section -->
+    <section class="steps-section" id="application">
+        <div class="container">
+            <h2 class="section-title">Application Process</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; color: var(--gray-color); font-size: 1.1rem;">
+                Our streamlined admission process ensures fairness and transparency. Follow these simple steps to complete your application.
+            </p>
+
+            <div class="steps-timeline">
+                <!-- Step 1 -->
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3>Online Registration</h3>
+                        <p>Fill in personal information and upload required documents through our secure portal. Create your student account and complete the application form with accurate details.</p>
+                        <div style="margin-top: 15px; font-size: 0.9rem; color: var(--primary-color);">
+                            <i class="fas fa-clock"></i> Estimated time: 20-30 minutes
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Application Review</h3>
+                        <p>Our admissions team reviews applications against eligibility criteria. This includes verification of academic records and documents. You will receive a confirmation email once reviewed.</p>
+                        <div style="margin-top: 15px; font-size: 0.9rem; color: var(--primary-color);">
+                            <i class="fas fa-clock"></i> Processing time: 3-5 working days
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-list-ol"></i>
+                        </div>
+                        <h3>Shortlisting</h3>
+                        <p>Eligible candidates are shortlisted based on academic performance and potential. Additional assessments or interviews may be conducted for final selection.</p>
+                        <div style="margin-top: 15px; font-size: 0.9rem; color: var(--primary-color);">
+                            <i class="fas fa-users"></i> Only top-performing applicants proceed
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
+                        <h3>Admission Decision</h3>
+                        <p>Successful applicants receive admission offers via email and the portal. Acceptance must be confirmed within the specified timeframe to secure your place.</p>
+                        <div style="margin-top: 15px; font-size: 0.9rem; color: var(--primary-color);">
+                            <i class="fas fa-calendar-check"></i> Offers valid for 14 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Required Documents Section -->
+    <section class="documents-section">
+        <div class="container">
+            <h2 class="section-title">Required Documents</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto; color: var(--gray-color); font-size: 1.1rem;">
+                Prepare these documents before starting your online application. All documents must be clear, readable, and in PDF or JPEG format.
+            </p>
+
+            <div class="documents-grid">
+                <div class="document-card">
+                    <div class="document-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Grade 8 Certificate</h3>
+                    <p>Official Ministry of Education Grade 8 certificate showing minimum 80% score</p>
+                </div>
+
+                <div class="document-card">
+                    <div class="document-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>Birth Certificate</h3>
+                    <p>Original birth certificate or legal age verification document</p>
+                </div>
+
+                <div class="document-card">
+                    <div class="document-icon">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <h3>Passport Photos</h3>
+                    <p>4 recent passport-sized photographs with white background</p>
+                </div>
+
+
+
+                <div class="document-card">
+                    <div class="document-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Recommendation Letter</h3>
+                    <p>Recommendation letter from Grade 8 class teacher or principal</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container faq-container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <input type="checkbox" id="faq1">
+                <label for="faq1" class="faq-question">
+                    <span>What is the application deadline?</span>
+                    <i class="fas fa-plus"></i>
+                </label>
+                <div class="faq-answer">
+                    <p>The application deadline for the 2024/2025 academic year is June 30, 2024. Late applications may be considered if seats are available, but we encourage early submission.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <input type="checkbox" id="faq2">
+                <label for="faq2" class="faq-question">
+                    <span>Is there an application fee?</span>
+                    <i class="fas fa-plus"></i>
+                </label>
+                <div class="faq-answer">
+                    <p>Yes, there is a non-refundable application fee of 200 Birr. This covers administrative costs and can be paid at any Commercial Bank of Ethiopia branch using the reference number provided during online registration.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <input type="checkbox" id="faq3">
+                <label for="faq3" class="faq-question">
+                    <span>Can I apply if I scored 79.5%?</span>
+                    <i class="fas fa-plus"></i>
+                </label>
+                <div class="faq-answer">
+                    <p>The 80% requirement is strictly enforced. However, in exceptional cases where a student demonstrates outstanding performance in mathematics and science (90%+), the admissions committee may consider the application.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <input type="checkbox" id="faq4">
+                <label for="faq4" class="faq-question">
+                    <span>When will I know the admission decision?</span>
+                    <i class="fas fa-plus"></i>
+                </label>
+                <div class="faq-answer">
+                    <p>Admission decisions are typically communicated within 2 weeks after the application deadline. All applicants will receive notification via email and can check their status on the student portal.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <input type="checkbox" id="faq5">
+                <label for="faq5" class="faq-question">
+                    <span>What if I cannot upload documents online?</span>
+                    <i class="fas fa-plus"></i>
+                </label>
+                <div class="faq-answer">
+                    <p>You can submit physical copies of required documents at the school administration office during working hours (8:00 AM - 4:00 PM, Monday to Friday). Please bring both originals and copies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="container cta-container">
+            <h2 class="cta-title">Begin Your Application Today</h2>
+            <p class="cta-subtitle">Our system reduces paperwork, speeds up admissions, and provides a transparent process. Join over 500 students who have successfully gained admission through our streamlined system.</p>
+
+            <a href="registration.html" class="btn btn-secondary" style="margin-right: 15px; background-color: white; color: var(--primary-color);">
+                <i class="fas fa-user-plus"></i> Start Application
+            </a>
+            <a href="index.html" class="btn btn-outline" style="color: white; border-color: white;">
+                <i class="fas fa-home"></i> Return to Home
+            </a>
+
+            <div class="cta-stats">
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Students Admitted</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Satisfaction Rate</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Application Support</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3 Days</span>
+                    <span class="stat-label">Average Processing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>HUSNBSS <span>Secondary School</span></h2>
+                    <p>Haramaya University Special Non-Boarding Secondary School</p>
+                    <p style="margin-top: 15px; opacity: 0.8;">Providing quality education to highly talented students since 2021.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#" class="active">Admissions</a></li>
+                        <li><a href="#">Academics</a></li>
+                        <li><a href="login.html">Login Portal</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h3>Contact Information</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Haramaya University Sport Academy, Haramaya, Ethiopia</p>
+                    <p><i class="fas fa-phone"></i> +251 (0)22 665 0000</p>
+                    <p><i class="fas fa-envelope"></i> admissions@husnbss.edu.et</p>
+                    <p><i class="fas fa-globe"></i> www.haramaya.edu.et/husnbss</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2024 Haramaya University Special Non-Boarding Secondary School. All rights reserved.</p>
+                <p style="margin-top: 5px;">Admissions Office Hours: Monday-Friday, 8:30 AM - 4:30 PM</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Simple CSS-only Menu Toggle -->
+    <style>
+        #mobileMenuToggle {
+            display: none;
+        }
+        
+        #mobileMenuToggle:checked~#mainNav {
+            display: block;
+        }
+        
+        #mobileMenuToggle:checked+label .fa-bars:before {
+            content: "\f00d";
+        }
+    </style>
+
+    <!-- Replace the mobile menu button with a checkbox hack -->
+    <input type="checkbox" id="mobileMenuToggle" style="display: none;">
+    <label for="mobileMenuToggle" class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+    </label>
+</body>
+
+</html>

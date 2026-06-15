@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HUSNBSS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Admin Dashboard Styles */
+        
+         :root {
+            --primary-color: #006747;
+            /* Haramaya University Green */
+            --secondary-color: #FDB913;
+            /* Accent Gold */
+            --accent-color: #002147;
+            /* Dark Blue */
+            --light-color: #f8f9fa;
+            --dark-color: #333;
+            --gray-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Dashboard Header */
+        
+        .dashboard-header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        .dashboard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .user-role {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+        
+        .btn-login {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .btn-login:hover {
+            background-color: #005238;
+        }
+        /* Main Layout */
+        
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+            padding: 30px 0;
+            min-height: calc(100vh - 80px);
+        }
+        /* Sidebar */
+        
+        .dashboard-sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 0;
+            overflow: hidden;
+            height: fit-content;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: var(--transition);
+        }
+        
+        .sidebar-menu a:hover {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+        }
+        
+        .sidebar-menu a.active {
+            background-color: #e9f5f1;
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+        /* Dashboard Content */
+        
+        .dashboard-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+        
+        .dashboard-content h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .subtitle {
+            color: var(--gray-color);
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        /* Stats Grid */
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-card h3 {
+            font-size: 1rem;
+            color: var(--gray-color);
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .trend {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .badge-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        /* Sections */
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        /* Tabs Navigation using CSS only */
+        
+        .tab-system {
+            margin-bottom: 30px;
+        }
+        
+        .tab-links {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        .tab-link {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: var(--gray-color);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .tab-link.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content:target {
+            display: block;
+        }
+        /* Default tab shown when no target */
+        
+        #dashboard {
+            display: block;
+        }
+        /* Hide all tabs when any tab is targeted */
+        
+        #dashboard:target~#dashboard,
+        #pending-applications:target~#pending-applications,
+        #waiting-students:target~#waiting-students,
+        #register-teacher:target~#register-teacher,
+        #register-student:target~#register-student,
+        #manage-teachers:target~#manage-teachers,
+        #manage-students:target~#manage-students,
+        #system-rules:target~#system-rules,
+        #academic-calendar:target~#academic-calendar {
+            display: none;
+        }
+        /* Show the targeted tab */
+        
+        #dashboard:target,
+        #pending-applications:target,
+        #waiting-students:target,
+        #register-teacher:target,
+        #register-student:target,
+        #manage-teachers:target,
+        #manage-students:target,
+        #system-rules:target,
+        #academic-calendar:target {
+            display: block;
+        }
+        /* Tables */
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--accent-color);
+            position: sticky;
+            top: 0;
+        }
+        
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+        /* Action Buttons */
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+        
+        .btn-accept {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-accept:hover {
+            background-color: #218838;
+        }
+        
+        .btn-reject {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-reject:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-remove {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-edit {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+        
+        .btn-view {
+            background-color: var(--info-color);
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background-color: #138496;
+        }
+        
+        .btn-add {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn-add:hover {
+            background-color: #005238;
+        }
+        /* Forms */
+        
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 103, 71, 0.1);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-submit:hover {
+            background-color: #005238;
+        }
+        
+        .btn-cancel {
+            background-color: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #545b62;
+        }
+        /* Search and Filter */
+        
+        .search-filter {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+        
+        .filter-box select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            min-width: 150px;
+        }
+        /* Calendar */
+        
+        .calendar {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 20px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-header h3 {
+            color: var(--accent-color);
+            margin: 0;
+        }
+        
+        .calendar-nav button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--gray-color);
+            padding: 5px 10px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-day {
+            padding: 10px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            min-height: 60px;
+        }
+        
+        .calendar-day.header {
+            font-weight: 600;
+            color: var(--accent-color);
+            background-color: #e9ecef;
+        }
+        
+        .calendar-day.today {
+            background-color: #e9f5f1;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .calendar-event {
+            font-size: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* Status Indicators */
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-pending .status-dot {
+            background-color: var(--warning-color);
+        }
+        
+        .status-approved .status-dot {
+            background-color: var(--success-color);
+        }
+        
+        .status-rejected .status-dot {
+            background-color: var(--danger-color);
+        }
+        
+        .status-waiting .status-dot {
+            background-color: var(--info-color);
+        }
+        /* Modal Styles for Confirmation */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal:target {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h3 {
+            color: var(--accent-color);
+            margin: 0;
+        }
+        
+        .modal-close {
+            color: var(--gray-color);
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        /* Quick Actions */
+        
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 992px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-sidebar {
+                order: 2;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .search-filter {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .tab-links {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .table th,
+            .table td {
+                padding: 10px 8px;
+                font-size: 0.9rem;
+            }
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .btn-action {
+                padding: 5px 8px;
+                font-size: 0.8rem;
+            }
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+        /* CSS-only mobile menu */
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu-checkbox {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            .dashboard-sidebar {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                z-index: 3000;
+                padding-top: 60px;
+                overflow-y: auto;
+            }
+            .mobile-menu-checkbox:checked~.dashboard-sidebar {
+                display: block;
+            }
+            .mobile-menu-checkbox:checked~.mobile-menu-btn .fa-bars::before {
+                content: "\f00d";
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard">
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="dashboard-nav">
+                <div class="logo">
+                    <div class="logo-icon">HUS</div>
+                    <div class="logo-text">
+                        <span class="logo-main">HUSNBSS Admin</span>
+                        <span class="logo-sub">Dashboard</span>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div>
+                        <div class="user-name">Admin User</div>
+                        <div class="user-role">System Administrator</div>
+                    </div>
+                    <a href="index.html" class="btn-login">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <label for="mobile-menu-toggle" class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="container">
+            <!-- Mobile menu checkbox -->
+            <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox">
+
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <ul class="sidebar-menu">
+                        <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="#pending-applications"><i class="fas fa-user-clock"></i> Pending Applications</a></li>
+                        <li><a href="#waiting-students"><i class="fas fa-users"></i> Waiting List Students</a></li>
+                        <li><a href="#register-teacher"><i class="fas fa-chalkboard-teacher"></i> Register Teacher</a></li>
+                        <li><a href="#register-student"><i class="fas fa-user-plus"></i> Register Student</a></li>
+                        <li><a href="#manage-teachers"><i class="fas fa-chalkboard-teacher"></i> Manage Teachers</a></li>
+                        <li><a href="#manage-students"><i class="fas fa-user-graduate"></i> Manage Students</a></li>
+                        <li><a href="#system-rules"><i class="fas fa-cog"></i> System Rules</a></li>
+                        <li><a href="#academic-calendar"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Back to Home</a></li>
+                    </ul>
+                </aside>
+
+                <!-- Content Area -->
+                <section class="dashboard-content">
+                    <!-- Tab Navigation -->
+                    <div class="tab-system">
+                        <div class="tab-links">
+                            <a href="#dashboard" class="tab-link active">Dashboard</a>
+                            <a href="#pending-applications" class="tab-link">Pending Applications</a>
+                            <a href="#waiting-students" class="tab-link">Waiting List</a>
+                            <a href="#register-teacher" class="tab-link">Register Teacher</a>
+                            <a href="#register-student" class="tab-link">Register Student</a>
+                            <a href="#manage-teachers" class="tab-link">Manage Teachers</a>
+                            <a href="#manage-students" class="tab-link">Manage Students</a>
+                            <a href="#system-rules" class="tab-link">System Rules</a>
+                            <a href="#academic-calendar" class="tab-link">Calendar</a>
+                        </div>
+
+                        <!-- Dashboard Overview -->
+                        <div id="dashboard" class="tab-content active">
+                            <h1>Admin Dashboard</h1>
+                            <p class="subtitle">Welcome to HUSNBSS Administration Panel - Manage school operations</p>
+
+                            <!-- Stats Cards -->
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <h3>Total Students</h3>
+                                    <div class="number">347</div>
+                                    <div class="trend">↑ 12% this year</div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Total Teachers</h3>
+                                    <div class="number">28</div>
+                                    <div class="trend">↑ 2 new hires</div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Pending Applications</h3>
+                                    <div class="number">156</div>
+                                    <div class="trend badge badge-warning">Require review</div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Waiting List</h3>
+                                    <div class="number">42</div>
+                                    <div class="trend badge badge-info">Awaiting spots</div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="section">
+                                <h2>Quick Actions</h2>
+                                <div class="quick-actions">
+                                    <a href="#register-teacher" class="btn-add">
+                                        <i class="fas fa-plus"></i> Add New Teacher
+                                    </a>
+                                    <a href="#register-student" class="btn-add">
+                                        <i class="fas fa-plus"></i> Add New Student
+                                    </a>
+                                    <a href="#pending-applications" class="btn-add">
+                                        <i class="fas fa-clipboard-check"></i> Review Applications
+                                    </a>
+                                    <a href="#manage-students" class="btn-add">
+                                        <i class="fas fa-user-graduate"></i> Manage Students
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Recent Activities -->
+                            <div class="section">
+                                <h2>Recent Activities</h2>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>User</th>
+                                                <th>Activity</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Mar 15, 2024</td>
+                                                <td>Teacher Alemayehu</td>
+                                                <td>Uploaded Grade 9 Physics results</td>
+                                                <td><span class="badge badge-success">Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mar 14, 2024</td>
+                                                <td>Student Tewodros</td>
+                                                <td>Submitted assignment late</td>
+                                                <td><span class="badge badge-warning">Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mar 14, 2024</td>
+                                                <td>System</td>
+                                                <td>156 new applications received</td>
+                                                <td><span class="badge badge-warning">Requires Review</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mar 13, 2024</td>
+                                                <td>Admin</td>
+                                                <td>Updated academic calendar</td>
+                                                <td><span class="badge badge-success">Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mar 12, 2024</td>
+                                                <td>Teacher Sophia</td>
+                                                <td>Requested lab equipment</td>
+                                                <td><span class="badge badge-success">Approved</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pending Applications -->
+                        <div id="pending-applications" class="tab-content">
+                            <h1>Pending Applications</h1>
+                            <p class="subtitle">Review and process student applications for admission</p>
+
+                            <!-- Search and Filter -->
+                            <div class="search-filter">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" placeholder="Search applications by name, ID or grade...">
+                                </div>
+                                <div class="filter-box">
+                                    <select>
+                                        <option value="all">All Status</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="reviewed">Reviewed</option>
+                                        <option value="waiting">Waiting List</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>App ID</th>
+                                            <th>Student Name</th>
+                                            <th>Grade 8 Score</th>
+                                            <th>Applied Date</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>APP2024001</td>
+                                            <td>Abebe Kebede</td>
+                                            <td>92%</td>
+                                            <td>Mar 10, 2024</td>
+                                            <td><span class="status-indicator status-pending"><span class="status-dot"></span> Pending</span>
+                                            </td>
+                                            <td class="action-buttons">
+                                                <a href="#accept-modal" class="btn-action btn-accept"><i class="fas fa-check"></i> Accept</a>
+                                                <a href="#reject-modal" class="btn-action btn-reject"><i class="fas fa-times"></i> Reject</a>
+                                                <a href="#view-application" class="btn-action btn-view"><i class="fas fa-eye"></i> View</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>APP2024002</td>
+                                            <td>Selamawit Assefa</td>
+                                            <td>88%</td>
+                                            <td>Mar 9, 2024</td>
+                                            <td><span class="status-indicator status-pending"><span class="status-dot"></span> Pending</span>
+                                            </td>
+                                            <td class="action-buttons">
+                                                <a href="#accept-modal" class="btn-action btn-accept"><i class="fas fa-check"></i> Accept</a>
+                                                <a href="#reject-modal" class="btn-action btn-reject"><i class="fas fa-times"></i> Reject</a>
+                                                <a href="#view-application" class="btn-action btn-view"><i class="fas fa-eye"></i> View</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>APP2024003</td>
+                                            <td>Getachew Tesfaye</td>
+                                            <td>85%</td>
+                                            <td>Mar 8, 2024</td>
+                                            <td><span class="status-indicator status-pending"><span class="status-dot"></span> Pending</span>
+                                            </td>
+                                            <td class="action-buttons">
+                                                <a href="#accept-modal" class="btn-action btn-accept"><i class="fas fa-check"></i> Accept</a>
+                                                <a href="#reject-modal" class="btn-action btn-reject"><i class="fas fa-times"></i> Reject</a>
+                                                <a href="#view-application" class="btn-action btn-view"><i class="fas fa-eye"></i> View</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>APP2024004</td>
+                                            <td>Meron Solomon</td>
+                                            <td>96%</td>
+                                            <td>Mar 7, 2024</td>
+                                            <td><span class="status-indicator status-pending"><span class="status-dot"></span> Pending</span>
+                                            </td>
+                                            <td class="action-buttons">
+                                                <a href="#accept-modal" class="btn-action btn-accept"><i class="fas fa-check"></i> Accept</a>
+                                                <a href="#reject-modal" class="btn-action btn-reject"><i class="fas fa-times"></i> Reject</a>
+                                                <a href="#view-application" class="btn-action btn-view"><i class="fas fa-eye"></i> View</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>APP2024005</td>
+                                            <td>Yohannes Girma</td>
+                                            <td>81%</td>
+                                            <td>Mar 6, 2024</td>
+                                            <td><span class="status-indicator status-pending"><span class="status-dot"></span> Pending</span>
+                                            </td>
+                                            <td class="action-buttons">
+                                                <a href="#accept-modal" class="btn-action btn-accept"><i class="fas fa-check"></i> Accept</a>
+                                                <a href="#reject-modal" class="btn-action btn-reject"><i class="fas fa-times"></i> Reject</a>
+                                                <a href="#view-application" class="btn-action btn-view"><i class="fas fa-eye"></i> View</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Waiting List Students -->
+                        <div id="waiting-students" class="tab-content">
+                            <h1>Waiting List Students</h1>
+                            <p class="subtitle">Students approved but waiting for available spots in the school</p>
+
+                            <a href="#add-waiting-modal" class="btn-add">
+                                <i class="fas fa-plus"></i> Add Student to Waiting List
+                            </a>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Student Name</th>
+                                            <th>Grade 8 Score</th>
+                                            <th>Added to List</th>
+                                            <th>Priority</th>
+                                            <th>Expected Entry</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>WL001</td>
+                                            <td>Kebede Mulugeta</td>
+                                            <td>89%</td>
+                                            <td>Feb 15, 2024</td>
+                                            <td><span class="badge badge-warning">High</span></td>
+                                            <td>Sep 2024</td>
+                                            <td class="action-buttons">
+                                                <a href="#admit-modal" class="btn-action btn-accept"><i class="fas fa-user-check"></i> Admit</a>
+                                                <a href="#remove-waiting-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>WL002</td>
+                                            <td>Selam Tarekegn</td>
+                                            <td>87%</td>
+                                            <td>Feb 20, 2024</td>
+                                            <td><span class="badge badge-warning">High</span></td>
+                                            <td>Sep 2024</td>
+                                            <td class="action-buttons">
+                                                <a href="#admit-modal" class="btn-action btn-accept"><i class="fas fa-user-check"></i> Admit</a>
+                                                <a href="#remove-waiting-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>WL003</td>
+                                            <td>Daniel Kebede</td>
+                                            <td>84%</td>
+                                            <td>Mar 1, 2024</td>
+                                            <td><span class="badge badge-info">Medium</span></td>
+                                            <td>Jan 2025</td>
+                                            <td class="action-buttons">
+                                                <a href="#admit-modal" class="btn-action btn-accept"><i class="fas fa-user-check"></i> Admit</a>
+                                                <a href="#remove-waiting-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>WL004</td>
+                                            <td>Martha Alemu</td>
+                                            <td>86%</td>
+                                            <td>Mar 5, 2024</td>
+                                            <td><span class="badge badge-info">Medium</span></td>
+                                            <td>Jan 2025</td>
+                                            <td class="action-buttons">
+                                                <a href="#admit-modal" class="btn-action btn-accept"><i class="fas fa-user-check"></i> Admit</a>
+                                                <a href="#remove-waiting-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Register Teacher -->
+                        <div id="register-teacher" class="tab-content">
+                            <h1>Register New Teacher</h1>
+                            <p class="subtitle">Add a new teacher to the HUSNBSS system</p>
+
+                            <div class="form-container">
+                                <form id="teacherForm">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="teacherFirstName">First Name *</label>
+                                            <input type="text" id="teacherFirstName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="teacherLastName">Last Name *</label>
+                                            <input type="text" id="teacherLastName" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="teacherEmail">Email Address *</label>
+                                            <input type="email" id="teacherEmail" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="teacherPhone">Phone Number *</label>
+                                            <input type="tel" id="teacherPhone" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="teacherSubject">Subject Specialization *</label>
+                                            <select id="teacherSubject" required>
+                                                <option value="">Select Subject</option>
+                                                <option value="mathematics">Mathematics</option>
+                                                <option value="physics">Physics</option>
+                                                <option value="chemistry">Chemistry</option>
+                                                <option value="biology">Biology</option>
+                                                <option value="english">English</option>
+                                                <option value="ict">ICT</option>
+                                                <option value="amharic">Amharic</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="teacherGrade">Assigned Grade Level *</label>
+                                            <select id="teacherGrade" required>
+                                                <option value="">Select Grade</option>
+                                                <option value="9">Grade 9</option>
+                                                <option value="10">Grade 10</option>
+                                                <option value="11">Grade 11</option>
+                                                <option value="12">Grade 12</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="teacherQualification">Highest Qualification *</label>
+                                            <select id="teacherQualification" required>
+                                                <option value="">Select Qualification</option>
+                                                <option value="phd">PhD</option>
+                                                <option value="masters">Master's Degree</option>
+                                                <option value="bachelors">Bachelor's Degree</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="teacherExperience">Years of Experience *</label>
+                                            <input type="number" id="teacherExperience" min="0" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="teacherAddress">Address</label>
+                                        <textarea id="teacherAddress" rows="2"></textarea>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <a href="#dashboard" class="btn-cancel">Cancel</a>
+                                        <button type="submit" class="btn-submit">Register Teacher</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Register Student -->
+                        <div id="register-student" class="tab-content">
+                            <h1>Register New Student</h1>
+                            <p class="subtitle">Manually add a student to the HUSNBSS system</p>
+
+                            <div class="form-container">
+                                <form id="studentForm">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="studentFirstName">First Name *</label>
+                                            <input type="text" id="studentFirstName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="studentLastName">Last Name *</label>
+                                            <input type="text" id="studentLastName" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="studentGender">Gender *</label>
+                                            <select id="studentGender" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="studentDOB">Date of Birth *</label>
+                                            <input type="date" id="studentDOB" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="studentGrade">Grade Level *</label>
+                                            <select id="studentGrade" required>
+                                                <option value="">Select Grade</option>
+                                                <option value="9">Grade 9</option>
+                                                <option value="10">Grade 10</option>
+                                                <option value="11">Grade 11</option>
+                                                <option value="12">Grade 12</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="studentSection">Section *</label>
+                                            <select id="studentSection" required>
+                                                <option value="">Select Section</option>
+                                                <option value="A">Section A</option>
+                                                <option value="B">Section B</option>
+                                                <option value="C">Section C</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="studentParentName">Parent/Guardian Name *</label>
+                                            <input type="text" id="studentParentName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="studentParentPhone">Parent Phone *</label>
+                                            <input type="tel" id="studentParentPhone" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="studentAddress">Address *</label>
+                                            <input type="text" id="studentAddress" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="studentScore">Grade 8 Score (%) *</label>
+                                            <input type="number" id="studentScore" min="80" max="100" step="0.1" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <a href="#dashboard" class="btn-cancel">Cancel</a>
+                                        <button type="submit" class="btn-submit">Register Student</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Manage Teachers -->
+                        <div id="manage-teachers" class="tab-content">
+                            <h1>Manage Teachers</h1>
+                            <p class="subtitle">View, edit, or remove teachers from the system</p>
+
+                            <!-- Search and Filter -->
+                            <div class="search-filter">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" placeholder="Search teachers by name or subject...">
+                                </div>
+                                <div class="filter-box">
+                                    <select>
+                                        <option value="all">All Subjects</option>
+                                        <option value="mathematics">Mathematics</option>
+                                        <option value="physics">Physics</option>
+                                        <option value="chemistry">Chemistry</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Teacher ID</th>
+                                            <th>Name</th>
+                                            <th>Subject</th>
+                                            <th>Grade Level</th>
+                                            <th>Qualification</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>T001</td>
+                                            <td>Alemayehu Kebede</td>
+                                            <td>Physics</td>
+                                            <td>Grades 9-10</td>
+                                            <td>Master's Degree</td>
+                                            <td><span class="badge badge-success">Active</span></td>
+                                            <td class="action-buttons">
+                                                <a href="#edit-teacher" class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#remove-teacher-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>T002</td>
+                                            <td>Sophia Mohammed</td>
+                                            <td>Mathematics</td>
+                                            <td>Grades 11-12</td>
+                                            <td>Master's Degree</td>
+                                            <td><span class="badge badge-success">Active</span></td>
+                                            <td class="action-buttons">
+                                                <a href="#edit-teacher" class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#remove-teacher-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>T003</td>
+                                            <td>Yohannes Getachew</td>
+                                            <td>Chemistry</td>
+                                            <td>Grades 10-11</td>
+                                            <td>Master's Degree</td>
+                                            <td><span class="badge badge-warning">On Leave</span></td>
+                                            <td class="action-buttons">
+                                                <a href="#edit-teacher" class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#remove-teacher-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>T004</td>
+                                            <td>Marta Asfaw</td>
+                                            <td>Biology</td>
+                                            <td>Grades 9-12</td>
+                                            <td>PhD</td>
+                                            <td><span class="badge badge-success">Active</span></td>
+                                            <td class="action-buttons">
+                                                <a href="#edit-teacher" class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#remove-teacher-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: var(--border-radius);">
+                                <h3><i class="fas fa-exclamation-triangle" style="color: var(--danger-color);"></i> Important: Removing Teachers</h3>
+                                <p>When removing a teacher from the system:</p>
+                                <ul style="margin-top: 10px; padding-left: 20px;">
+                                    <li>All associated classes will be reassigned to other teachers</li>
+                                    <li>Student grades and records will be preserved</li>
+                                    <li>The teacher's account will be permanently deleted</li>
+                                    <li>An email notification will be sent to the teacher</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Manage Students -->
+                        <div id="manage-students" class="tab-content">
+                            <h1>Manage Students</h1>
+                            <p class="subtitle">View, edit, or remove students from the system</p>
+
+                            <!-- Search and Filter -->
+                            <div class="search-filter">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" placeholder="Search students by name or ID...">
+                                </div>
+                                <div class="filter-box">
+                                    <select>
+                                        <option value="all">All Grades</option>
+                                        <option value="9">Grade 9</option>
+                                        <option value="10">Grade 10</option>
+                                        <option value="11">Grade 11</option>
+                                        <option value="12">Grade 12</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Grade</th>
+                                            <th>Section</th>
+                                            <th>Grade 8 Score</th>
+                                            <th>GPA</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>S001</td>
+                                            <td>Kebede Mulugeta</td>
+                                            <td>9</td>
+                                            <td>A</td>
+                                            <td>89%</td>
+                                            <td>4.0</td>
+                                            <td><span class="badge badge-success">Active</span></td>
+                                            <td class="action-buttons">
+                                                <a href="#edit-student" class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#remove-student-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>S002</td>
+                                            <td>Selam Tarekegn</td>
+                                            <td>10</td>
+                                            <td>B</td>
+                                            <td>87%</td>
+                                            <td>3.8</td>
+                                            <td><span class="badge badge-success">Active</span></td>
+                                            <td class="action-buttons">
+                                                <a href="#edit-student" class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#remove-student-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>S003</td>
+                                            <td>Daniel Kebede</td>
+                                            <td>11</td>
+                                            <td>A</td>
+                                            <td>84%</td>
+                                            <td>3.5</td>
+                                            <td><span class="badge badge-warning">Probation</span></td>
+                                            <td class="action-buttons">
+                                                <a href="#edit-student" class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#remove-student-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>S004</td>
+                                            <td>Martha Alemu</td>
+                                            <td>12</td>
+                                            <td>C</td>
+                                            <td>86%</td>
+                                            <td>3.9</td>
+                                            <td><span class="badge badge-success">Active</span></td>
+                                            <td class="action-buttons">
+                                                <a href="#edit-student" class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#remove-student-modal" class="btn-action btn-remove"><i class="fas fa-trash"></i> Remove</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: var(--border-radius);">
+                                <h3><i class="fas fa-exclamation-triangle" style="color: var(--danger-color);"></i> Important: Removing Students</h3>
+                                <p>When removing a student from the system:</p>
+                                <ul style="margin-top: 10px; padding-left: 20px;">
+                                    <li>All academic records will be archived for 5 years</li>
+                                    <li>The student's account will be deactivated immediately</li>
+                                    <li>Parents/guardians will be notified by email</li>
+                                    <li>Any pending fees will be calculated and invoiced</li>
+                                    <li>The spot will become available for waiting list students</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- System Rules -->
+                        <div id="system-rules" class="tab-content">
+                            <h1>System Rules & Admin Guidelines</h1>
+                            <p class="subtitle">Rules and guidelines for HUSNBSS system administration</p>
+
+                            <div class="form-container">
+                                <h3><i class="fas fa-user-shield" style="color: var(--primary-color);"></i> Admin User Rules</h3>
+                                <ul style="margin-top: 15px; padding-left: 20px; margin-bottom: 30px;">
+                                    <li>Admin users have full access to all system functions</li>
+                                    <li>Admins can register, edit, and remove teachers and students</li>
+                                    <li>Admins must verify teacher qualifications before registration</li>
+                                    <li>Admins must ensure student eligibility (80%+ Grade 8 score)</li>
+                                    <li>Admins should maintain student-teacher ratio (25:1 maximum)</li>
+                                    <li>All admin actions are logged for accountability</li>
+                                </ul>
+
+                                <h3><i class="fas fa-user-plus" style="color: var(--primary-color);"></i> Teacher Registration Rules</h3>
+                                <ul style="margin-top: 15px; padding-left: 20px; margin-bottom: 30px;">
+                                    <li>All teachers must hold at least a Master's degree in their subject</li>
+                                    <li>Teachers must provide proof of qualification during registration</li>
+                                    <li>Maximum teaching load: 24 periods per week</li>
+                                    <li>Teachers can be assigned to multiple grade levels</li>
+                                    <li>Teachers removed from system must have their classes reassigned</li>
+                                </ul>
+
+                                <h3><i class="fas fa-user-graduate" style="color: var(--primary-color);"></i> Student Registration Rules</h3>
+                                <ul style="margin-top: 15px; padding-left: 20px; margin-bottom: 30px;">
+                                    <li>Minimum Grade 8 score: 80% (national exam)</li>
+                                    <li>Maximum class size: 25 students per section</li>
+                                    <li>Students must maintain 75% attendance to remain enrolled</li>
+                                    <li>Students with GPA below 2.0 are placed on academic probation</li>
+                                    <li>Waiting list students are prioritized by Grade 8 score and application date</li>
+                                </ul>
+
+                                <h3><i class="fas fa-trash-alt" style="color: var(--danger-color);"></i> Removal Procedures</h3>
+                                <ul style="margin-top: 15px; padding-left: 20px; margin-bottom: 30px;">
+                                    <li>Teachers: 30-day notice period before removal (except for misconduct)</li>
+                                    <li>Students: Parent/guardian notification required before removal</li>
+                                    <li>All removals require approval from school principal</li>
+                                    <li>Removed users' data is archived for 5 years</li>
+                                    <li>Replacement must be arranged before removing key staff</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Calendar Section -->
+                        <div id="academic-calendar" class="tab-content">
+                            <h1>Academic Calendar</h1>
+                            <p class="subtitle">Manage school events, holidays, and academic schedule</p>
+
+                            <div class="calendar">
+                                <div class="calendar-header">
+                                    <h3>March 2024</h3>
+                                    <div class="calendar-nav">
+                                        <button><i class="fas fa-chevron-left"></i></button>
+                                        <button><i class="fas fa-chevron-right"></i></button>
+                                    </div>
+                                </div>
+                                <div class="calendar-grid">
+                                    <div class="calendar-day header">Sun</div>
+                                    <div class="calendar-day header">Mon</div>
+                                    <div class="calendar-day header">Tue</div>
+                                    <div class="calendar-day header">Wed</div>
+                                    <div class="calendar-day header">Thu</div>
+                                    <div class="calendar-day header">Fri</div>
+                                    <div class="calendar-day header">Sat</div>
+
+                                    <!-- Calendar days would be populated here -->
+                                    <div class="calendar-day">25</div>
+                                    <div class="calendar-day">26</div>
+                                    <div class="calendar-day">27</div>
+                                    <div class="calendar-day">28</div>
+                                    <div class="calendar-day">29</div>
+                                    <div class="calendar-day">1</div>
+                                    <div class="calendar-day">2</div>
+                                    <div class="calendar-day">3</div>
+                                    <div class="calendar-day">4</div>
+                                    <div class="calendar-day">5</div>
+                                    <div class="calendar-day">6</div>
+                                    <div class="calendar-day today">
+                                        7
+                                        <div class="calendar-event">Staff Meeting</div>
+                                    </div>
+                                    <div class="calendar-day">8</div>
+                                    <div class="calendar-day">9</div>
+                                    <div class="calendar-day">10</div>
+                                    <div class="calendar-day">11</div>
+                                    <div class="calendar-day">
+                                        12
+                                        <div class="calendar-event">Parent-Teacher Conference</div>
+                                    </div>
+                                    <div class="calendar-day">13</div>
+                                    <div class="calendar-day">14</div>
+                                    <div class="calendar-day">15</div>
+                                    <div class="calendar-day">16</div>
+                                    <div class="calendar-day">17</div>
+                                    <div class="calendar-day">18</div>
+                                    <div class="calendar-day">19</div>
+                                    <div class="calendar-day">20</div>
+                                    <div class="calendar-day">
+                                        21
+                                        <div class="calendar-event">Midterm Exams</div>
+                                    </div>
+                                    <div class="calendar-day">22</div>
+                                    <div class="calendar-day">23</div>
+                                    <div class="calendar-day">24</div>
+                                    <div class="calendar-day">25</div>
+                                    <div class="calendar-day">26</div>
+                                    <div class="calendar-day">27</div>
+                                    <div class="calendar-day">28</div>
+                                    <div class="calendar-day">29</div>
+                                    <div class="calendar-day">30</div>
+                                    <div class="calendar-day">31</div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 30px;">
+                                <a href="#add-event-modal" class="btn-add">
+                                    <i class="fas fa-plus"></i> Add New Event to Calendar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals (Hidden by default, shown when targeted) -->
+    <!-- Accept Application Modal -->
+    <div id="accept-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Accept Student Application</h3>
+                <a href="#" class="modal-close">&times;</a>
+            </div>
+            <p>Are you sure you want to accept this student's application?</p>
+            <p><strong>Student:</strong> Abebe Kebede</p>
+            <p><strong>Grade 8 Score:</strong> 92%</p>
+            <div class="modal-actions">
+                <a href="#" class="btn-cancel">Cancel</a>
+                <a href="#dashboard" class="btn-submit">Accept Student</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reject Application Modal -->
+    <div id="reject-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reject Student Application</h3>
+                <a href="#" class="modal-close">&times;</a>
+            </div>
+            <p>Are you sure you want to reject this student's application?</p>
+            <p><strong>Student:</strong> Abebe Kebede</p>
+            <div class="modal-actions">
+                <a href="#" class="btn-cancel">Cancel</a>
+                <a href="#dashboard" class="btn-submit btn-reject">Reject Application</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove Teacher Modal -->
+    <div id="remove-teacher-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Remove Teacher from System</h3>
+                <a href="#" class="modal-close">&times;</a>
+            </div>
+            <p>Are you sure you want to remove this teacher from the system?</p>
+            <p><strong>Teacher:</strong> Alemayehu Kebede</p>
+            <p><strong>Subject:</strong> Physics</p>
+            <p><strong>Warning:</strong> This action cannot be undone. All classes will need to be reassigned.</p>
+            <div class="modal-actions">
+                <a href="#" class="btn-cancel">Cancel</a>
+                <a href="#dashboard" class="btn-submit btn-remove">Remove Teacher</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove Student Modal -->
+    <div id="remove-student-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Remove Student from System</h3>
+                <a href="#" class="modal-close">&times;</a>
+            </div>
+            <p>Are you sure you want to remove this student from the system?</p>
+            <p><strong>Student:</strong> Kebede Mulugeta</p>
+            <p><strong>Grade:</strong> 9, Section A</p>
+            <p><strong>Warning:</strong> This action cannot be undone. The student's spot will be made available for waiting list students.</p>
+            <div class="modal-actions">
+                <a href="#" class="btn-cancel">Cancel</a>
+                <a href="#dashboard" class="btn-submit btn-remove">Remove Student</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add to Waiting List Modal -->
+    <div id="add-waiting-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Student to Waiting List</h3>
+                <a href="#" class="modal-close">&times;</a>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="waitingStudentName">Student Name *</label>
+                    <input type="text" id="waitingStudentName" required>
+                </div>
+                <div class="form-group">
+                    <label for="waitingStudentScore">Grade 8 Score (%) *</label>
+                    <input type="number" id="waitingStudentScore" min="80" max="100" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="waitingPriority">Priority Level *</label>
+                    <select id="waitingPriority" required>
+                        <option value="">Select Priority</option>
+                        <option value="high">High Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <a href="#" class="btn-cancel">Cancel</a>
+                    <button type="submit" class="btn-submit">Add to Waiting List</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admit Student Modal -->
+    <div id="admit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Admit Student from Waiting List</h3>
+                <a href="#" class="modal-close">&times;</a>
+            </div>
+            <p>Are you sure you want to admit this student from the waiting list?</p>
+            <p><strong>Student:</strong> Kebede Mulugeta</p>
+            <p><strong>Grade 8 Score:</strong> 89%</p>
+            <p><strong>Waiting Since:</strong> Feb 15, 2024</p>
+            <div class="modal-actions">
+                <a href="#" class="btn-cancel">Cancel</a>
+                <a href="#dashboard" class="btn-submit">Admit Student</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove from Waiting List Modal -->
+    <div id="remove-waiting-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Remove Student from Waiting List</h3>
+                <a href="#" class="modal-close">&times;</a>
+            </div>
+            <p>Are you sure you want to remove this student from the waiting list?</p>
+            <p><strong>Student:</strong> Kebede Mulugeta</p>
+            <p><strong>Grade 8 Score:</strong> 89%</p>
+            <div class="modal-actions">
+                <a href="#" class="btn-cancel">Cancel</a>
+                <a href="#dashboard" class="btn-submit btn-remove">Remove from List</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

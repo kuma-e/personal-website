@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUSNBSS Student Registration Form</title>
+    <style>
+         :root {
+            --primary: #0066cc;
+            --error: #d32f2f;
+            --success: #2e7d32;
+            --bg: #f9f9fb;
+            --card: #ffffff;
+            --border: #dce1e7;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            background: var(--bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .container {
+            background: var(--card);
+            width: 100%;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--primary);
+        }
+        
+        form {
+            display: grid;
+            gap: 18px;
+        }
+        
+        fieldset {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        legend {
+            font-weight: 600;
+            color: var(--primary);
+            padding: 0 6px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .error {
+            color: var(--error);
+            font-size: 0.9rem;
+        }
+        
+        .success {
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+        
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        button[type="submit"] {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        button[type="reset"] {
+            background: #e0e7ff;
+            color: var(--primary);
+        }
+        
+        @media (max-width: 700px) {
+            .cols-2,
+            .cols-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>HUSNBSS Student Registration</h1>
+
+        <form id="regForm" novalidate>
+            <!-- PERSONAL INFORMATION -->
+            <fieldset>
+                <legend>1. Personal Information</legend>
+                <div class="grid cols-2">
+                    <div>
+                        <label>Full Name *</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+                    <div>
+                        <label>Date of Birth *</label>
+                        <input type="date" id="dob" required>
+                        <div id="ageDisplay" class="success"></div>
+                        <div id="ageError" class="error"></div>
+                    </div>
+                </div>
+
+                <div class="grid cols-3">
+                    <div>
+                        <label>Gender *</label>
+                        <select id="gender" required>
+            <option value="">Select</option>
+            <option>Female</option>
+            <option>Male</option>
+          </select>
+                    </div>
+                    <div>
+                        <label>Nationality *</label>
+                        <input type="text" value="Ethiopian" readonly>
+                    </div>
+                    <div>
+                        <label>Region *</label>
+                        <input type="text" value="Oromia Region" readonly>
+                    </div>
+                </div>
+
+                <div class="grid cols-3">
+                    <div>
+                        <label>Zone *</label>
+                        <input type="text" value="East Hararge Zone" readonly>
+                    </div>
+                    <div>
+                        <label>Woreda *</label>
+                        <select id="woreda" required>
+            <option value="">Select Woreda</option>
+                        <option value="Awadey">Awadey</option>
+
+            <option value="Babille">Babille</option>
+            <option value="Bedeno">Bedeno</option>
+            <option value="Chinaksen">Chinaksen</option>
+            <option value="Fedis">Fedis</option>
+            <option value="Gola Oda">Gola Oda</option>
+            <option value="Goro Gutu">Goro Gutu</option>
+            <option value="Girawa">Girawa</option>
+            <option value="Gursum">Gursum</option>
+            <option value="Haramaya">Haramaya</option>
+            <option value="Jarso">Jarso</option>
+            <option value="Kersa">Kersa</option>
+            <option value="Kombolcha">Kombolcha</option>
+            <option value="Kurfa Chele">Kurfa Chele</option>
+            <option value="Malka Balo">Malka Balo</option>
+            <option value="Meta">Meta</option>
+            <option value="Midega Tola">Midega Tola</option>
+          </select>
+                    </div>
+                    <div>
+                        <label>Kebele *</label>
+                        <input type="text" id="kebele" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label>City *</label>
+                    <select id="city" required>
+          <option value="">Select City</option>
+          <option value="Maya">Maya City</option>
+          <option value="Surrounding">Surrounding Area</option>
+          <option value="Other">Other (Not Allowed)</option>
+        </select>
+                    <div id="surroundingAreaWrap" style="display:none;margin-top:8px;">
+                        <label>Choose surrounding area *</label>
+                        <select id="surroundingArea">
+            <option value="">Select</option>
+            <option value="Harar border">Harar border</option>
+            <option value="Ifa area">Ifa area</option>
+            <option value="Dengego area">Dengego area</option>
+          </select>
+                    </div>
+                    <div id="cityError" class="error"></div>
+                </div>
+            </fieldset>
+
+            <!-- CONTACT DETAILS -->
+            <fieldset>
+                <legend>3. Contact Details</legend>
+                <div class="grid cols-2">
+                    <div>
+                        <label>Student Phone Number *</label>
+                        <input type="tel" id="studentPhone" required placeholder="+2519XXXXXXXX">
+                    </div>
+                    <div>
+                        <label>Emergency Contact *</label>
+                        <input type="text" id="emergencyContact" required placeholder="Name - Phone">
+                    </div>
+                </div>
+                <div>
+                    <label>Parent/Guardian Name and Contact *</label>
+                    <input type="text" id="guardianContact" required placeholder="Full Name - Phone">
+                </div>
+            </fieldset>
+
+            <!-- ACADEMIC BACKGROUND -->
+            <fieldset>
+                <legend>4. Academic Background</legend>
+                <div class="grid cols-2">
+                    <div>
+                        <label>Primary School Attended *</label>
+                        <input type="text" id="primarySchool" required>
+                    </div>
+                    <div>
+                        <label>Ministry of Education Student ID</label>
+                        <input type="text" id="moeId">
+                    </div>
+                </div>
+                <div>
+                    <label>Attach Grade 8 National Exam Certificate *</label>
+                    <input type="file" id="examFile" required accept=".pdf,image/*">
+                    <div id="fileError" class="error"></div>
+                </div>
+                <div class="grid cols-2">
+                    <div>
+                        <label>Mathematics Score (%) *</label>
+                        <input type="number" id="mathScore" min="0" max="100" required>
+                    </div>
+                    <div>
+                        <label>English Score (%) *</label>
+                        <input type="number" id="engScore" min="0" max="100" required>
+                    </div>
+                </div>
+                <div id="scoreError" class="error"></div>
+                <div id="performanceSummary" class="success"></div>
+            </fieldset>
+
+            <!-- ELIGIBILITY -->
+            <fieldset>
+                <legend>5. Eligibility Confirmation</legend>
+                <label><input type="checkbox" id="confirmZone" required> I am from East Hararge Zone</label>
+                <label><input type="checkbox" id="confirmExam" required> I passed the Grade 8 National Exam</label>
+                <label><input type="checkbox" id="confirmCriteria" required> I meet the age and academic performance criteria</label>
+                <div id="eligibilityError" class="error"></div>
+            </fieldset>
+
+            <!-- ADDITIONAL INFO -->
+            <fieldset>
+                <legend>6. Additional Information</legend>
+                <div class="grid cols-2">
+                    <div>
+                        <label>Preferred Language of Instruction</label>
+                        <select id="language">
+            <option value="">Select</option>
+            <option>Afan Oromo</option>
+            <option>Amharic</option>
+            <option>English</option>
+          </select>
+                    </div>
+                    <div>
+                        <label>Special Needs (if any)</label>
+                        <input type="text" id="specialNeeds" placeholder="Optional">
+                    </div>
+                </div>
+                <div>
+                    <label>Extracurricular Interests</label>
+                    <textarea id="extra" placeholder="e.g., football, art, music"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- DECLARATION -->
+            <fieldset>
+                <legend>7. Declaration</legend>
+                <div class="grid cols-2">
+                    <div>
+                        <label>Student Signature *</label>
+                        <input type="text" id="studentSign" required>
+                    </div>
+                    <div>
+                        <label>Guardian Signature *</label>
+                        <input type="text" id="guardianSign" required>
+                    </div>
+                </div>
+                <div>
+                    <label>Date of Submission *</label>
+                    <input type="date" id="submissionDate" required>
+                </div>
+            </fieldset>
+
+            <div id="formMessage"></div>
+
+            <div style="display:flex;gap:10px;">
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

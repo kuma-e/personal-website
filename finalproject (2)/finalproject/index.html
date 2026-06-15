@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haramaya University Special Non-Boarding Secondary School</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS-only tab functionality */
+        .academics-tabs {
+            position: relative;
+        }
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tab-content:target {
+            display: block;
+            opacity: 1;
+        }
+        /* Hide all tab contents by default */
+        
+        #grade9 {
+            display: block;
+            /* Show first tab by default */
+            opacity: 1;
+        }
+        /* Hide other tabs when one is targeted */
+        
+        .tab-content:target~#grade9 {
+            display: none;
+            opacity: 0;
+        }
+        /* Mobile menu with checkbox hack */
+        
+        .menu-toggle-checkbox {
+            display: none;
+        }
+        
+        .menu-toggle-label {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        /* Tab styling */
+        
+        .tab-header {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-link {
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-decoration: none;
+            color: var(--dark-color);
+            display: inline-block;
+        }
+        
+        .tab-link:hover {
+            border-color: var(--gray-color);
+        }
+        /* Active tab styling using :target */
+        
+        .tab-link[href="#grade9"]:target,
+        .tab-link[href="#grade11"]:target,
+        .tab-link[href="#grade12"]:target {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        /* Default active state for first tab */
+        
+        .tab-link[href="#grade9"] {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        /* Reset first tab style when other tabs are targeted */
+        
+        .tab-content:target~.tab-header .tab-link[href="#grade9"] {
+            background: white;
+            color: var(--dark-color);
+            border-color: transparent;
+        }
+        /* Responsive design */
+        
+        @media (max-width: 768px) {
+            .menu-toggle-label {
+                display: block;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--primary-color);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                display: none;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+            .menu-toggle-checkbox:checked~.nav-menu {
+                display: flex;
+            }
+            .tab-header {
+                flex-direction: column;
+                align-items: center;
+            }
+            .tab-link {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">HUS</div>
+                <div class="logo-text">
+                    <span class="logo-main">Haramaya University</span>
+                    <span class="logo-sub">Special Non-Boarding Secondary School</span>
+                </div>
+            </a>
+
+            <!-- Checkbox for mobile menu -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox">
+            <label for="menu-toggle" class="menu-toggle-label">
+                <i class="fas fa-bars"></i>
+            </label>
+
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="admissions.html" class="nav-link">Admissions</a>
+                <a href="index.html#academic" class="nav-link">Academics</a>
+                <a href="login.html" class="btn-login">Login <i class="fas fa-sign-in-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Excellence in Education for Talented Minds</h1>
+                <p class="hero-description">Haramaya University Special Non-Boarding Secondary School provides quality education for highly talented students who scored above 80% in the national Grade 8 examination.</p>
+                <div class="hero-buttons">
+                    <a href="registration.html" class="btn-primary">Apply Now</a>
+                    <a href="about.html" class="btn-secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Free Education</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1:1</span>
+                    <span class="stat-label">Computer Ratio</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">Masters</span>
+                    <span class="stat-label">Qualified Teachers</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose HUSNBSS?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Quality Education</h3>
+                    <p>We provide high-quality education focusing on synchronizing theory with practice for talented students.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>ICT Integration</h3>
+                    <p>Each student gets a dedicated computer in our modern ICT laboratory for practical learning.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Expert Teachers</h3>
+                    <p>All our teachers hold master's degrees and are experts in their respective fields.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Free Lunch</h3>
+                    <p>We provide free lunch and all necessary educational materials to our students.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academics Preview -->
+    <section class="academics-preview">
+        <div class="container">
+            <h2 class="section-title" id="academic">Academic Structure</h2>
+            <div class="academics-tabs">
+                <div class="tab-header">
+                    <a href="#grade9" class="tab-link active">Grade 9 & 10</a>
+                    <a href="#grade11" class="tab-link">Grade 11 & 12 Natural</a>
+                    <a href="#grade12" class="tab-link">Grade 11 & 12 Social</a>
+                </div>
+
+                <div class="tab-content active" id="grade9">
+                    <h3>Common Subjects for Grades 9 & 10</h3>
+                    <ul class="subject-list">
+                        <li><i class="fas fa-book"></i> Mathematics</li>
+                        <li><i class="fas fa-globe"></i> English</li>
+                        <li><i class="fas fa-atom"></i> Physics</li>
+                        <li><i class="fas fa-flask"></i> Chemistry</li>
+                        <li><i class="fas fa-seedling"></i> Biology</li>
+                        <li><i class="fas fa-landmark"></i> Civics</li>
+                        <li><i class="fas fa-history"></i> History</li>
+                        <li><i class="fas fa-mountain"></i> Geography</li>
+                        <li><i class="fas fa-globe"></i> Afaan Oromo</li>
+                        <li><i class="fas fa-globe"></i> Amharic</li>
+                        <li><i class="fas fa-running"></i> Physical Fitness</li>
+                        <li><i class="fas fa-tractor"></i> Agriculture</li>
+                        <li><i class="fas fa-balance-scale"></i> Economics</li>
+                    </ul>
+                </div>
+
+                <div class="tab-content" id="grade11">
+                    <h3>Natural Science Stream (Grades 11 & 12)</h3>
+                    <ul class="subject-list">
+                        <li><i class="fas fa-calculator"></i> Mathematics for NS</li>
+                        <li><i class="fas fa-atom"></i> Physics</li>
+                        <li><i class="fas fa-globe"></i> English</li>
+                        <li><i class="fas fa-flask"></i> Chemistry</li>
+                        <li><i class="fas fa-seedling"></i> Biology</li>
+                        <li><i class="fas fa-heartbeat"></i> Health Science</li>
+                        <li><i class="fas fa-laptop-code"></i> Technical Drawing</li>
+                    </ul>
+                </div>
+
+                <div class="tab-content" id="grade12">
+                    <h3>Social Science Stream (Grades 11 & 12)</h3>
+                    <ul class="subject-list">
+                        <li><i class="fas fa-globe"></i> English</li>
+                        <li><i class="fas fa-calculator"></i> Mathematics for SS</li>
+                        <li><i class="fas fa-chart-line"></i> Economics</li>
+                        <li><i class="fas fa-landmark"></i> Geography</li>
+                        <li><i class="fas fa-history"></i> History</li>
+                        <li><i class="fas fa-balance-scale"></i> Business Studies</li>
+                        <li><i class="fas fa-users"></i> Sociology</li>
+                        <li><i class="fas fa-book"></i> Amharic Literature</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Announcements -->
+    <section class="announcements">
+        <div class="container">
+            <h2 class="section-title">Latest Announcements</h2>
+            <div class="announcement-grid">
+                <div class="announcement-card">
+                    <div class="announcement-date">August 15, 2026</div>
+                    <h3>Admissions Open for 2026</h3>
+                    <p>Applications are now open for students who scored 80% and above in the national Grade 8 exam.</p>
+                    <a href="admissions.html" class="read-more">Read More →</a>
+                </div>
+                <div class="announcement-card">
+                    <div class="announcement-date">june 10, 2026</div>
+                    <h3>New ICT Laboratory Inaugurated</h3>
+                    <p>Our new state-of-the-art ICT lab with 1:1 computer ratio is now operational.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+                <div class="announcement-card">
+                    <div class="announcement-date">may 28, 2026</div>
+                    <h3>Academic Calendar Released</h3>
+                    <p>The academic calendar for the 2025/26 school year is now available for download.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>HUSNBSS</h3>
+                    <p>Haramaya University Special Non-Boarding Secondary School provides quality education for highly talented students in the region.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="admissions.html">Admissions</a>
+                    <a href="#academic">Academics</a>
+                    <a href="contact.html">Contact</a>
+
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Haramaya University, Sport Academy Campus</p>
+                    <p><i class="fas fa-phone"></i> +251-22-665-1234</p>
+                    <p><i class="fas fa-envelope"></i> husnbss@haramaya.edu.et</p>
+                </div>
+                <div class="footer-col">
+                    <h3>School Hours</h3>
+                    <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
+                    <p>Saturday: 8:00 AM - 12:00 PM</p>
+                    <p>Sunday: Closed</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Haramaya University Special Non-Boarding Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

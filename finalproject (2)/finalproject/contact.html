@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - HUSNBSS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Page Hero ── */
+        .page-hero {
+            background: linear-gradient(rgba(0,33,71,.9), rgba(0,33,71,.8)), url('images/hero-bg.jpg');
+            background-size: cover; background-position: center;
+            color: white; padding: 5rem 0; text-align: center;
+        }
+        .page-hero h1 { font-size: 2.8rem; margin-bottom: .8rem; color: white; }
+        .page-hero p  { font-size: 1.15rem; opacity: .9; }
+
+        /* ── Contact Section ── */
+        .contact-section { padding: 5rem 0; background: white; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* Info Cards */
+        .contact-info h2 { margin-bottom: 1.5rem; }
+        .contact-info p  { color: var(--gray-color); margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.8; }
+        .info-cards { display: flex; flex-direction: column; gap: 1.2rem; }
+        .info-card {
+            display: flex; align-items: flex-start; gap: 1rem;
+            background: var(--light-color);
+            padding: 1.4rem 1.6rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary-color);
+            transition: var(--transition);
+        }
+        .info-card:hover { transform: translateX(4px); box-shadow: var(--box-shadow); }
+        .info-card-icon {
+            width: 46px; height: 46px; flex-shrink: 0;
+            background: var(--primary-color);
+            color: white; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+        }
+        .info-card h4 { font-size: .88rem; color: var(--gray-color); margin: 0 0 4px; text-transform: uppercase; letter-spacing: .5px; }
+        .info-card p  { font-size: .95rem; color: var(--dark-color); margin: 0; font-weight: 500; }
+        .info-card a  { color: var(--primary-color); text-decoration: none; }
+        .info-card a:hover { text-decoration: underline; }
+
+        /* Hours table */
+        .hours-table { width: 100%; border-collapse: collapse; margin-top: .5rem; }
+        .hours-table td { padding: 6px 0; font-size: .9rem; border-bottom: 1px solid #eee; }
+        .hours-table td:last-child { text-align: right; color: var(--gray-color); }
+        .hours-table tr:last-child td { border-bottom: none; }
+
+        /* Contact Form */
+        .contact-form-box {
+            background: var(--light-color);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--box-shadow);
+        }
+        .contact-form-box h2 { margin-bottom: .5rem; }
+        .contact-form-box .form-subtitle { color: var(--gray-color); margin-bottom: 2rem; font-size: .95rem; }
+
+        .form-group { margin-bottom: 1.4rem; }
+        .form-group label { display: block; margin-bottom: .5rem; font-weight: 600; font-size: .9rem; color: var(--dark-color); }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%; padding: .75rem 1rem;
+            border: 1.5px solid #ddd; border-radius: var(--border-radius);
+            font-size: .95rem; font-family: inherit;
+            transition: var(--transition); background: white;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none; border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0,33,71,.1);
+        }
+        .form-group textarea { resize: vertical; min-height: 130px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .btn-send {
+            width: 100%; padding: 1rem;
+            background: var(--primary-color); color: white;
+            border: none; border-radius: var(--border-radius);
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-send:hover { background: #003a7a; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,33,71,.25); }
+
+        /* Success message (CSS only) */
+        .form-success {
+            display: none; background: #d4edda; color: #155724;
+            padding: 1rem 1.5rem; border-radius: var(--border-radius);
+            margin-top: 1rem; align-items: center; gap: 10px;
+            font-weight: 500; font-size: .95rem;
+        }
+
+        /* Map section */
+        .map-section { padding: 0 0 5rem; background: white; }
+        .map-wrapper {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            height: 360px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-align: center;
+        }
+        .map-placeholder i  { font-size: 3.5rem; margin-bottom: 1rem; color: var(--secondary-color); display: block; }
+        .map-placeholder h3 { font-size: 1.4rem; margin-bottom: .5rem; }
+        .map-placeholder p  { opacity: .85; font-size: 1rem; }
+
+        /* FAQ strip */
+        .faq-strip { padding: 4rem 0; background: var(--light-color); }
+        .faq-strip h2 { text-align: center; margin-bottom: 2.5rem; }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .faq-card {
+            background: white; padding: 1.8rem;
+            border-radius: var(--border-radius); box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        .faq-card:hover { transform: translateY(-4px); }
+        .faq-card h4 { color: var(--primary-color); margin-bottom: .8rem; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+        .faq-card h4 i { color: var(--secondary-color); }
+        .faq-card p { color: var(--gray-color); font-size: .9rem; line-height: 1.7; margin: 0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .page-hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">HUS</div>
+                <div class="logo-text">
+                    <span class="logo-main">Haramaya University</span>
+                    <span class="logo-sub">Special Non-Boarding Secondary School</span>
+                </div>
+            </a>
+            <button class="menu-toggle" onclick="this.nextElementSibling.classList.toggle('show')">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="admissions.html" class="nav-link">Admissions</a>
+                <a href="index.html#academic" class="nav-link">Academics</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+                <a href="login.html" class="btn-login">Login <i class="fas fa-sign-in-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>We're here to help. Reach out to us anytime.</p>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+
+                <!-- Left: Info -->
+                <div class="contact-info">
+                    <h2>Get In Touch</h2>
+                    <p>Have a question about admissions, academic programs, or school life at HUSNBSS? Our team is ready to assist you.</p>
+
+                    <div class="info-cards">
+
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h4>Our Location</h4>
+                                <p>Haramaya University, Sport Academy Campus<br>Haramaya, East Hararge, Oromia, Ethiopia</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="fas fa-phone-alt"></i></div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p><a href="tel:+251226651234">+251-22-665-1234</a></p>
+                                <p style="font-size:.85rem;color:var(--gray-color);margin-top:3px;">Mon–Fri, 8:00 AM – 5:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:husnbss@haramaya.edu.et">husnbss@haramaya.edu.et</a></p>
+                                <p style="font-size:.85rem;color:var(--gray-color);margin-top:3px;">We reply within 1–2 business days</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="fas fa-clock"></i></div>
+                            <div style="flex:1">
+                                <h4>School Hours</h4>
+                                <table class="hours-table">
+                                    <tr><td>Monday – Friday</td><td>8:00 AM – 5:00 PM</td></tr>
+                                    <tr><td>Saturday</td><td>8:00 AM – 12:00 PM</td></tr>
+                                    <tr><td>Sunday</td><td>Closed</td></tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="info-card" style="border-left-color:var(--accent-color)">
+                            <div class="info-card-icon" style="background:var(--accent-color)"><i class="fas fa-share-alt"></i></div>
+                            <div>
+                                <h4>Follow Us</h4>
+                                <div style="display:flex;gap:12px;margin-top:6px;">
+                                    <a href="#" style="color:var(--primary-color);font-size:1.3rem"><i class="fab fa-facebook"></i></a>
+                                    <a href="#" style="color:var(--primary-color);font-size:1.3rem"><i class="fab fa-telegram"></i></a>
+                                    <a href="#" style="color:var(--primary-color);font-size:1.3rem"><i class="fab fa-youtube"></i></a>
+                                    <a href="#" style="color:var(--primary-color);font-size:1.3rem"><i class="fab fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right: Form -->
+                <div class="contact-form-box">
+                    <h2>Send a Message</h2>
+                    <p class="form-subtitle">Fill in the form below and we will get back to you as soon as possible.</p>
+
+                    <form id="contactForm" onsubmit="handleSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" placeholder="Abebe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" placeholder="Kebede" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" placeholder="abebe@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+251 9XX XXX XXXX">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" required>
+                                <option value="">Select a topic...</option>
+                                <option value="admissions">Admissions Inquiry</option>
+                                <option value="academics">Academic Programs</option>
+                                <option value="fees">Fees &amp; Scholarships</option>
+                                <option value="ict">ICT Lab &amp; Facilities</option>
+                                <option value="registration">Registration Help</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" placeholder="Write your message here..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-send">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+
+                        <div class="form-success" id="successMsg">
+                            <i class="fas fa-check-circle"></i> Thank you! Your message has been sent. We'll be in touch soon.
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Map placeholder -->
+    <section class="map-section">
+        <div class="container">
+            <div class="map-wrapper">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Haramaya University – Sport Academy Campus</h3>
+                    <p>Haramaya, East Hararge Zone, Oromia Region, Ethiopia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ strip -->
+    <section class="faq-strip">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h4><i class="fas fa-question-circle"></i> How do I apply for admission?</h4>
+                    <p>Visit our <a href="admissions.html" style="color:var(--primary-color);font-weight:600">Admissions page</a> and click "Start Application". You'll need your Grade 8 certificate showing at least 80%.</p>
+                </div>
+                <div class="faq-card">
+                    <h4><i class="fas fa-question-circle"></i> Is education really free?</h4>
+                    <p>Yes. HUSNBSS provides 100% free tuition, free lunch, and all educational materials to enrolled students.</p>
+                </div>
+                <div class="faq-card">
+                    <h4><i class="fas fa-question-circle"></i> What is the minimum score required?</h4>
+                    <p>Students must have scored 80% or above in the national Grade 8 Ministry of Education examination.</p>
+                </div>
+                <div class="faq-card">
+                    <h4><i class="fas fa-question-circle"></i> When does the school year start?</h4>
+                    <p>The academic year typically begins in September. Application deadlines are announced in July–August each year.</p>
+                </div>
+                <div class="faq-card">
+                    <h4><i class="fas fa-question-circle"></i> How can parents contact teachers?</h4>
+                    <p>Parents can contact teachers through the school's main office or via the student portal after enrolment.</p>
+                </div>
+                <div class="faq-card">
+                    <h4><i class="fas fa-question-circle"></i> Is there an ICT lab for students?</h4>
+                    <p>Yes — every enrolled student gets dedicated access to our modern ICT laboratory with a 1:1 computer ratio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>HUSNBSS</h3>
+                    <p>Haramaya University Special Non-Boarding Secondary School provides quality education for highly talented students in the region.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="admissions.html">Admissions</a>
+                    <a href="index.html#academic">Academics</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Haramaya University, Sport Academy Campus</p>
+                    <p><i class="fas fa-phone"></i> +251-22-665-1234</p>
+                    <p><i class="fas fa-envelope"></i> husnbss@haramaya.edu.et</p>
+                </div>
+                <div class="footer-col">
+                    <h3>School Hours</h3>
+                    <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
+                    <p>Saturday: 8:00 AM – 12:00 PM</p>
+                    <p>Sunday: Closed</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Haramaya University Special Non-Boarding Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('show');
+        });
+
+        // Contact form submission (demo)
+        function handleSubmit(e) {
+            e.preventDefault();
+            var msg = document.getElementById('successMsg');
+            msg.style.display = 'flex';
+            document.getElementById('contactForm').reset();
+            msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - HUSNBSS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Professional Teacher Dashboard ── */
+        :root {
+            --primary-color: #002147;
+            --secondary-color: #E6AF2E;
+            --accent-color: #1E6B52;
+            --danger-color: #DC3545;
+            --success-color: #28A745;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+            --gray-color: #6C757D;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 20px rgba(0,0,0,.08);
+            --transition: all .3s ease;
+        }
+
+        body.dashboard {
+            background: #f0f2f5;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* ── Header ── */
+        .dashboard-header {
+            background: linear-gradient(135deg, #1E6B52 0%, #145240 100%);
+            padding: 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,.2);
+        }
+        .dashboard-header .container { padding: 0 24px; }
+        .dashboard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .logo-icon {
+            width: 44px; height: 44px;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem; flex-shrink: 0;
+        }
+        .logo-main { font-size: 1.1rem; font-weight: 700; color: #fff; display: block; }
+        .logo-sub  { font-size: .75rem; color: rgba(255,255,255,.7); display: block; }
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .user-avatar {
+            width: 40px; height: 40px;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: .9rem; flex-shrink: 0;
+        }
+        .user-name  { font-weight: 600; color: #fff; font-size: .9rem; }
+        .user-role  { font-size: .75rem; color: rgba(255,255,255,.7); }
+        .btn-login {
+            background: rgba(255,255,255,.15);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600; font-size: .85rem;
+            text-decoration: none;
+            display: flex; align-items: center; gap: 7px;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,.25);
+        }
+        .btn-login:hover { background: rgba(255,255,255,.25); }
+
+        /* ── Layout ── */
+        .dashboard-main { padding: 28px 0; }
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* ── Sidebar ── */
+        .dashboard-sidebar {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            position: sticky;
+            top: 90px;
+        }
+        .sidebar-header {
+            background: linear-gradient(135deg, #1E6B52, #145240);
+            padding: 20px 20px 16px;
+            color: #fff;
+        }
+        .sidebar-header .avatar-lg {
+            width: 54px; height: 54px;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.2rem;
+            margin: 0 auto 10px;
+        }
+        .sidebar-header h4 { text-align: center; font-size: .95rem; margin: 0; }
+        .sidebar-header p  { text-align: center; font-size: .75rem; opacity: .75; margin: 2px 0 0; }
+
+        .sidebar-menu { list-style: none; padding: 10px 0; margin: 0; }
+        .sidebar-menu li { margin: 0; }
+        .sidebar-menu a {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 20px;
+            color: #444;
+            text-decoration: none;
+            font-size: .88rem; font-weight: 500;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+        .sidebar-menu a i { width: 18px; text-align: center; font-size: .9rem; color: var(--gray-color); transition: var(--transition); }
+        .sidebar-menu a:hover { background: #f4f6fa; color: #1E6B52; border-left-color: var(--secondary-color); }
+        .sidebar-menu a:hover i { color: #1E6B52; }
+        .sidebar-menu a.active { background: #eef7f3; color: #1E6B52; border-left-color: #1E6B52; font-weight: 600; }
+        .sidebar-menu a.active i { color: #1E6B52; }
+        .sidebar-menu li + li { border-top: 1px solid #f5f5f5; }
+
+        /* ── Content Area ── */
+        .dashboard-content { background: transparent; box-shadow: none; padding: 0; }
+
+        /* Page title bar */
+        .page-title-bar {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px 26px;
+            margin-bottom: 22px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-left: 5px solid var(--secondary-color);
+        }
+        .page-title-bar h1 { font-size: 1.4rem; color: var(--primary-color); margin: 0; }
+        .page-title-bar .subtitle { font-size: .875rem; color: var(--gray-color); margin: 4px 0 0; }
+        .page-title-bar .title-icon {
+            width: 46px; height: 46px;
+            background: linear-gradient(135deg, #1E6B52, #145240);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 1.2rem; flex-shrink: 0;
+        }
+
+        /* ── Stat Cards ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 22px 20px;
+            display: flex; align-items: center; gap: 16px;
+            transition: var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .stat-card::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: #1E6B52;
+        }
+        .stat-card:nth-child(2)::before { background: var(--secondary-color); }
+        .stat-card:nth-child(3)::before { background: var(--warning-color); }
+        .stat-card:nth-child(4)::before { background: var(--info-color); }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+        .stat-icon {
+            width: 50px; height: 50px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+            background: #e8f7f2; color: #1E6B52;
+        }
+        .stat-card:nth-child(2) .stat-icon { background: #fff8e1; color: var(--secondary-color); }
+        .stat-card:nth-child(3) .stat-icon { background: #fff8e1; color: var(--warning-color); }
+        .stat-card:nth-child(4) .stat-icon { background: #e1f5fe; color: var(--info-color); }
+        .stat-info { flex: 1; min-width: 0; }
+        .stat-card h3 { font-size: .78rem; color: var(--gray-color); text-transform: uppercase; letter-spacing: .5px; margin: 0 0 5px; }
+        .stat-card .number { font-size: 1.7rem; font-weight: 700; color: var(--primary-color); line-height: 1; margin-bottom: 5px; }
+        .stat-card .trend { font-size: .78rem; color: var(--gray-color); }
+
+        /* ── Section Panels ── */
+        .section {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+        .section h2 {
+            font-size: 1.05rem; color: var(--primary-color);
+            margin: 0 0 18px; padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section h2 i { color: var(--secondary-color); font-size: 1rem; }
+
+        /* ── Tables ── */
+        .table-responsive { overflow-x: auto; border-radius: 8px; }
+        .table { width: 100%; border-collapse: collapse; }
+        .table th {
+            background: var(--primary-color);
+            color: #fff; padding: 12px 14px;
+            font-size: .82rem; text-align: left; font-weight: 600;
+        }
+        .table th:first-child { border-radius: 6px 0 0 0; }
+        .table th:last-child  { border-radius: 0 6px 0 0; }
+        .table td { padding: 12px 14px; border-bottom: 1px solid #f0f0f0; font-size: .85rem; vertical-align: middle; }
+        .table tr:last-child td { border-bottom: none; }
+        .table tr:hover td { background: #f8f9ff; }
+
+        /* ── Badges ── */
+        .badge {
+            display: inline-block; padding: 4px 10px;
+            border-radius: 20px; font-size: .75rem; font-weight: 600;
+        }
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-danger  { background: #f8d7da; color: #721c24; }
+
+        /* ── Action Buttons ── */
+        .btn-primary {
+            padding: 7px 14px; border-radius: 6px; font-size: .82rem;
+            font-weight: 600; cursor: pointer; border: none;
+            transition: var(--transition); background: var(--primary-color); color: #fff;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-primary:hover { background: #003a7a; }
+        .btn-primary.small { padding: 5px 12px; font-size: .78rem; }
+
+        /* Performance alert row highlight */
+        .alert-row td:first-child { font-weight: 600; }
+
+        /* ── Responsive ── */
+        @media (max-width: 992px) {
+            .dashboard-layout { grid-template-columns: 1fr; }
+            .dashboard-sidebar { position: static; }
+        }
+        @media (max-width: 640px) {
+            .page-title-bar { flex-direction: column; gap: 12px; align-items: flex-start; }
+        }
+    </style>
+</head>
+
+<body class="dashboard">
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="dashboard-nav">
+                <div class="logo">
+                    <div class="logo-icon">HUS</div>
+                    <div class="logo-text">
+                        <span class="logo-main">HUSNBSS</span>
+                        <span class="logo-sub">Teacher Portal</span>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar">TA</div>
+                    <div>
+                        <div class="user-name">Teacher Alemayehu</div>
+                        <div class="user-role">Physics Department</div>
+                    </div>
+                    <a href="index.html" class="btn-login"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="dashboard-main">
+        <div class="container">
+            <div class="dashboard-layout">
+
+                <!-- Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <div class="sidebar-header">
+                        <div class="avatar-lg">TA</div>
+                        <h4>Teacher Alemayehu</h4>
+                        <p>Physics Department</p>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a href="dashboard-teacher.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-book-open"></i> My Classes</a></li>
+                        <li><a href="#"><i class="fas fa-tasks"></i> Assignments</a></li>
+                        <li><a href="#"><i class="fas fa-chart-line"></i> Grades</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> Students</a></li>
+                        <li><a href="#"><i class="fas fa-file-upload"></i> Resources</a></li>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Back to Home</a></li>
+                    </ul>
+                </aside>
+
+                <!-- Content -->
+                <section class="dashboard-content">
+
+                    <!-- Page title -->
+                    <div class="page-title-bar">
+                        <div>
+                            <h1>Teacher Dashboard</h1>
+                            <p class="subtitle">Welcome back, Teacher Alemayehu</p>
+                        </div>
+                        <div class="title-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-book-open"></i></div>
+                            <div class="stat-info">
+                                <h3>My Classes</h3>
+                                <div class="number">4</div>
+                                <div class="trend">Grade 9–12 Physics</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                            <div class="stat-info">
+                                <h3>Total Students</h3>
+                                <div class="number">156</div>
+                                <div class="trend">Across all classes</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-pen-alt"></i></div>
+                            <div class="stat-info">
+                                <h3>Pending Grading</h3>
+                                <div class="number">23</div>
+                                <div class="trend"><span class="badge badge-warning">Requires attention</span></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="stat-info">
+                                <h3>Next Class</h3>
+                                <div class="number" style="font-size:1.15rem;">10:30 AM</div>
+                                <div class="trend">Grade 11 Natural</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today's Schedule -->
+                    <div class="section">
+                        <h2><i class="fas fa-calendar-day"></i> Today's Schedule</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Class</th>
+                                        <th>Subject</th>
+                                        <th>Room</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>8:00 – 9:30</td>
+                                        <td><strong>Grade 9A</strong></td>
+                                        <td>Physics</td>
+                                        <td><i class="fas fa-flask" style="color:var(--info-color)"></i> Lab 3</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:30 – 12:00</td>
+                                        <td><strong>Grade 11 Natural</strong></td>
+                                        <td>Advanced Physics</td>
+                                        <td><i class="fas fa-door-open" style="color:var(--gray-color)"></i> Room 205</td>
+                                        <td><span class="badge badge-warning">Upcoming</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1:30 – 3:00</td>
+                                        <td><strong>Grade 10B</strong></td>
+                                        <td>Physics</td>
+                                        <td><i class="fas fa-flask" style="color:var(--info-color)"></i> Lab 2</td>
+                                        <td><span class="badge badge-warning">Later Today</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3:30 – 5:00</td>
+                                        <td><strong>Grade 12 Natural</strong></td>
+                                        <td>Physics Lab</td>
+                                        <td><i class="fas fa-flask" style="color:var(--info-color)"></i> Lab 1</td>
+                                        <td><span class="badge badge-warning">Later Today</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Assignment Submissions -->
+                    <div class="section">
+                        <h2><i class="fas fa-clipboard-list"></i> Assignment Submissions</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Assignment</th>
+                                        <th>Class</th>
+                                        <th>Due Date</th>
+                                        <th>Submitted</th>
+                                        <th>Pending</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Physics Lab Report 3</strong></td>
+                                        <td>Grade 11 Natural</td>
+                                        <td>Mar 14, 2024</td>
+                                        <td>32 / 40</td>
+                                        <td><span style="color:var(--danger-color);font-weight:600;">8</span></td>
+                                        <td><span class="badge badge-warning">Grading</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Chapter 5 Exercises</strong></td>
+                                        <td>Grade 9A</td>
+                                        <td>Mar 16, 2024</td>
+                                        <td>45 / 45</td>
+                                        <td>0</td>
+                                        <td><span class="badge badge-success">Graded</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Wave Properties Project</strong></td>
+                                        <td>Grade 10B</td>
+                                        <td>Mar 18, 2024</td>
+                                        <td>28 / 42</td>
+                                        <td><span style="color:var(--danger-color);font-weight:600;">14</span></td>
+                                        <td><span class="badge badge-warning">In Progress</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Term Paper Draft</strong></td>
+                                        <td>Grade 12 Natural</td>
+                                        <td>Mar 20, 2024</td>
+                                        <td>15 / 38</td>
+                                        <td><span style="color:var(--danger-color);font-weight:600;">23</span></td>
+                                        <td><span class="badge badge-warning">Open</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Student Performance Alerts -->
+                    <div class="section">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Student Performance Alerts</h2>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Class</th>
+                                        <th>Issue</th>
+                                        <th>Last Score</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="alert-row">
+                                        <td>Tewodros Mekonnen</td>
+                                        <td>Grade 11 Natural</td>
+                                        <td><span style="color:var(--danger-color)"><i class="fas fa-circle" style="font-size:.5rem;margin-right:5px"></i>Missed 3 assignments</span></td>
+                                        <td><strong style="color:var(--danger-color)">65%</strong></td>
+                                        <td><button class="btn-primary small">Schedule Meeting</button></td>
+                                    </tr>
+                                    <tr class="alert-row">
+                                        <td>Selamawit Abebe</td>
+                                        <td>Grade 10B</td>
+                                        <td><span style="color:var(--warning-color)"><i class="fas fa-circle" style="font-size:.5rem;margin-right:5px"></i>Grade dropped 15%</span></td>
+                                        <td><strong style="color:var(--warning-color)">72%</strong></td>
+                                        <td><button class="btn-primary small">Send Warning</button></td>
+                                    </tr>
+                                    <tr class="alert-row">
+                                        <td>Kebede Haile</td>
+                                        <td>Grade 9A</td>
+                                        <td><span style="color:var(--info-color)"><i class="fas fa-circle" style="font-size:.5rem;margin-right:5px"></i>Consistently late</span></td>
+                                        <td><strong style="color:var(--success-color)">88%</strong></td>
+                                        <td><button class="btn-primary small">Parent Contact</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
